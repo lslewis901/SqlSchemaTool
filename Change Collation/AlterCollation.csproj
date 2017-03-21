@@ -1,0 +1,253 @@
+<VisualStudioProject>
+    <CSHARP
+        ProjectType = "Local"
+        ProductVersion = "7.10.6030"
+        SchemaVersion = "2.0"
+        ProjectGuid = "{51CBA8A8-38DE-42D2-9698-21D30DAF795B}"
+    >
+        <Build>
+            <Settings
+                ApplicationIcon = ""
+                AssemblyKeyContainerName = ""
+                AssemblyName = "AlterCollation"
+                AssemblyOriginatorKeyFile = ""
+                DefaultClientScript = "JScript"
+                DefaultHTMLPageLayout = "Grid"
+                DefaultTargetSchema = "IE50"
+                DelaySign = "false"
+                OutputType = "WinExe"
+                PreBuildEvent = ""
+                PostBuildEvent = ""
+                RootNamespace = "AlterCollation"
+                RunPostBuildEvent = "OnBuildSuccess"
+                StartupObject = ""
+            >
+                <Config
+                    Name = "Debug"
+                    AllowUnsafeBlocks = "false"
+                    BaseAddress = "285212672"
+                    CheckForOverflowUnderflow = "false"
+                    ConfigurationOverrideFile = ""
+                    DefineConstants = "DEBUG;TRACE"
+                    DocumentationFile = ""
+                    DebugSymbols = "true"
+                    FileAlignment = "4096"
+                    IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
+                    Optimize = "false"
+                    OutputPath = "bin\Debug\"
+                    RegisterForComInterop = "false"
+                    RemoveIntegerChecks = "false"
+                    TreatWarningsAsErrors = "false"
+                    WarningLevel = "4"
+                />
+                <Config
+                    Name = "Release"
+                    AllowUnsafeBlocks = "false"
+                    BaseAddress = "285212672"
+                    CheckForOverflowUnderflow = "false"
+                    ConfigurationOverrideFile = ""
+                    DefineConstants = "TRACE"
+                    DocumentationFile = ""
+                    DebugSymbols = "false"
+                    FileAlignment = "4096"
+                    IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
+                    Optimize = "true"
+                    OutputPath = "bin\Release\"
+                    RegisterForComInterop = "false"
+                    RemoveIntegerChecks = "false"
+                    TreatWarningsAsErrors = "false"
+                    WarningLevel = "4"
+                />
+            </Settings>
+            <References>
+                <Reference
+                    Name = "System"
+                    AssemblyName = "System"
+                    HintPath = "..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.dll"
+                />
+                <Reference
+                    Name = "System.Data"
+                    AssemblyName = "System.Data"
+                    HintPath = "..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll"
+                />
+                <Reference
+                    Name = "System.Drawing"
+                    AssemblyName = "System.Drawing"
+                    HintPath = "..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll"
+                />
+                <Reference
+                    Name = "System.Windows.Forms"
+                    AssemblyName = "System.Windows.Forms"
+                    HintPath = "..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Windows.Forms.dll"
+                />
+                <Reference
+                    Name = "System.XML"
+                    AssemblyName = "System.Xml"
+                    HintPath = "..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
+                />
+            </References>
+        </Build>
+        <Files>
+            <Include>
+                <File
+                    RelPath = "AssemblyInfo.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ChangeCollation.htm"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "CollationChanger.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "FullTextLanguage.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "IScriptExecuteCallback.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "MainForm.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "MainForm.resx"
+                    DependentUpon = "MainForm.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Program.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Resources.resx"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "ScriptRunState.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ScriptStep.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ScriptStepCollection.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ScriptStepGenerateScript.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ScriptStepResource.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Utils.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Scripts\001 Setup.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\002 Disable Triggers.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\003 Drop Full Text.2000.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\003 Drop Full Text.2005.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\004 Drop Indexes + Relations.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\005 Drop Check Constraints.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\006 Drop Table Functions.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\007 Drop Calculated Columns.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\100 Alter Database Collation.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\101 Alter column Collation.2000.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\101 Alter column Collation.2005.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\201 Create Calculated Columns.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\202 Create Table Functions.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\203 Create Check Constraints.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\204 Create Indexes + Relations.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\205 Enable Triggers.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\206 Create FullText.2000.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\206 Create FullText.2005.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\998 Finish.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Scripts\999 Select Script.sql"
+                    BuildAction = "EmbeddedResource"
+                />
+            </Include>
+        </Files>
+    </CSHARP>
+</VisualStudioProject>
+

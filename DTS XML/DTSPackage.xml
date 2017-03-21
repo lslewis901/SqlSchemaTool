@@ -1,0 +1,538 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DTSPackage</name>
+    </assembly>
+    <members>
+        <member name="T:Lewis.SST.DTSPackageClass.DTSPackage2">
+            <summary>
+            DTSPackage class for wrapping DTS package2 functionality.
+            helpful information came from: http://www.sqldev.net/dts.htm
+            additional information was found here: http://www.developer.com/db/article.php/3502036
+            </summary>
+            
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.DTSPackageClass.DTSPackage2"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.DTSPackageClass.DTSPackage2"/> class.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="logFile">The log file.</param>
+            <param name="description">The description.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.Dispose">
+            <summary>
+            Disposes this instance.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.AddConnection(System.String,System.String,System.String,System.String,System.String,Lewis.SST.DTSPackageClass.DTSPackage2.ConnectionType,System.Int32,System.String,System.String)">
+            <summary>
+            Adds the DTS connection to a DTS package object.
+            </summary>
+            <param name="connectionName">Name of the connection.</param>
+            <param name="dataSource">The data source.</param>
+            <param name="catalog">The catalog.</param>
+            <param name="user">The user.</param>
+            <param name="password">The password.</param>
+            <param name="ct">The ct.</param>
+            <param name="timeout">The timeout.</param>
+            <param name="rowDelimiter">The row delimiter.</param>
+            <param name="colDelimiter">The col delimiter.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.AddStep(System.String,System.String)">
+            <summary>
+            Adds the DTS step to a DTS package object.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="description">The description.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.AddStep(System.String,System.String,System.String,System.String)">
+            <summary>
+            Adds the DTS step to a DTS package object.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="description">The description.</param>
+            <param name="axScript">The ax script.</param>
+            <param name="functionName">Name of the function.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.AddConstaintToStep(System.String,System.String)">
+            <summary>
+            Adds the constaint to the DTS step.
+            </summary>
+            <param name="sourceStepName">Name of the source step.</param>
+            <param name="constrainedStepName">Name of the constrained step.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.AddTask(System.String,System.String)">
+            <summary>
+            Adds the general DTS task to the DTS package object.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="description">The description.</param>
+            <returns>returns the custom task</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.AddTask(System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Adds the SQL Exec task to the DTS package object.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="description">The description.</param>
+            <param name="SQLQuery">The SQL query.</param>
+            <param name="connectionID">The connection ID.</param>
+            <param name="timeOut">The time out.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.AddTask(System.String,System.String,System.Int32,System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Adds the datapump task to the DTS package object.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="description">The description.</param>
+            <param name="sourceConnectID">The source connect ID.</param>
+            <param name="sourceObjectName">Name of the source object.</param>
+            <param name="destinationConnectID">The destination connect ID.</param>
+            <param name="destinationObjectName">Name of the destination object.</param>
+            <param name="exceptionFileName">Name of the exception file.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.GetPackageStep(System.String)">
+            <summary>
+            Gets the DTS package step by name.
+            </summary>
+            <param name="stepName">Name of the step.</param>
+            <returns>Returns the DTS step object</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.GetPackageStep(System.Int32)">
+            <summary>
+            Gets the DTS package step by step number.
+            </summary>
+            <param name="stepNo">The step no.</param>
+            <returns>Returns the DTS step object.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.GetPackageTask(System.String)">
+            <summary>
+            Gets the DTS package task by name.
+            </summary>
+            <param name="taskName">Name of the task.</param>
+            <returns>Returns the DTS task object.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.GetPackageTask(System.Int32)">
+            <summary>
+            Gets the DTS package task by number.
+            </summary>
+            <param name="taskNo">The task no.</param>
+            <returns>Returns the DTS task object.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.GetPackageConnection(System.String)">
+            <summary>
+            Gets the DTS package connection by name.
+            </summary>
+            <param name="connectionName">Name of the connection.</param>
+            <returns>Returns the DTS connection object.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.GetPackageConnection(System.Int32)">
+            <summary>
+            Gets the DTS package connection by number.
+            </summary>
+            <param name="connectionID">The connection ID.</param>
+            <returns>Returns the DTS connection object.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.GetPackageVersionInfo(System.String)">
+            <summary>
+            Gets the DTS package version info.
+            </summary>
+            <param name="UNCFile">The UNC file name of the DTS package Structured Storage file to read.</param>
+            <returns>Returns version information as a string.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.GetPackageVersionInfo(System.String,System.String,System.String,System.String,Lewis.SST.DTSPackageClass.DTSPackage2.authTypeFlags,System.Boolean)">
+            <summary>
+            Gets the DTS package version info.
+            </summary>
+            <param name="serverName">Name of the server.</param>
+            <param name="packageName">Name of the package.</param>
+            <param name="userName">Name of the user.</param>
+            <param name="passWord">The pass word.</param>
+            <param name="Auth">The auth.</param>
+            <param name="LatestPackage">if set to <c>true</c> [latest package].</param>
+            <returns>Returns version information as a string.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.Load(System.String,System.String,System.String,System.String)">
+            <summary>
+            Loads the DTS package from the DTS specified structured storage file.
+            </summary>
+            <param name="UNCFile">The UNC file.</param>
+            <param name="encryptPass">The encrypt pass.</param>
+            <param name="packageGUID">The package GUID.</param>
+            <param name="versionGUID">The version GUID.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.Load(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Loads the DTS package object from the specified SQL server.
+            </summary>
+            <param name="server">The server.</param>
+            <param name="user">The user.</param>
+            <param name="password">The password.</param>
+            <param name="encryptPass">The encrypt pass.</param>
+            <param name="packageGUID">The package GUID.</param>
+            <param name="versionGUID">The version GUID.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.Load(System.String)">
+            <summary>
+            Loads the DTS package object from the specified serialized DTS XML file.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.Save(System.String,System.String,System.String,System.String)">
+            <summary>
+            Saves the persisted DTS package object to the specified SQL server.
+            </summary>
+            <param name="SQLServerName">Name of the SQL server.</param>
+            <param name="user">The user.</param>
+            <param name="password">The password.</param>
+            <param name="encryptPass">The encrypt pass.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.Save(System.String)">
+            <summary>
+            Saves the persisted DTS package object to the specified serialized DTS XML file.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.Save(System.String,System.String)">
+            <summary>
+            Saves the persisted DTS package object to the DTS specified structured storage file.
+            </summary>
+            <param name="UNCName">Name of the UNC.</param>
+            <param name="encryptPass">The encrypt pass.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.Remove(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Removes the specified DTS package from the specified SQL server.
+            </summary>
+            <param name="SQLServerName">Name of the SQL server.</param>
+            <param name="user">The user.</param>
+            <param name="password">The password.</param>
+            <param name="packageGUID">The package GUID.</param>
+            <param name="versionGUID">The version GUID.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.initializeDefaults">
+            <summary>
+            Initializes the defaults for the DTS package object.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.createColumnTransformation(Lewis.SST.DTSPackageClass.DTSColumn,Lewis.SST.DTSPackageClass.DTSColumn,DTS.DataPumpTask2@,System.Int32)">
+            <summary>
+            Creates the column transformation object.
+            </summary>
+            <param name="sourceColumn">The source column.</param>
+            <param name="destinationColumn">The destination column.</param>
+            <param name="customTask">The custom task.</param>
+            <param name="fieldOrdinal">The field ordinal.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.createPackageFromXMLDoc(System.Xml.XmlDocument)">
+            <summary>
+            Populates the DTS package object from a loaded XML doc that is a serialized DTS package.
+            </summary>
+            <param name="xDoc">The XML doc.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.ReadXMLNodes(System.Xml.XmlNode,System.Object,System.Type,System.String)">
+            <summary>
+            Reads the XML nodes and converts them into DTS Package objects.
+            </summary>
+            <param name="xNode">The XML node to parse.</param>
+            <param name="obj">The obj to deserialize.</param>
+            <param name="t">The object type.</param>
+            <param name="parent">The parent node name.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.ReadXMLNodes(System.Xml.XmlNode,System.Object,System.String)">
+            <summary>
+            Reads the XML nodes and converts them into DTS Package objects.
+            </summary>
+            <param name="xNode">The XML node.</param>
+            <param name="obj">The obj to deserialize.</param>
+            <param name="parent">The parent node name.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.createXMLDocFromPackage">
+            <summary>
+            Creates/serializes an XML doc from the persisted DTS package object.
+            </summary>
+            <returns>The XML doc.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.CreateChildNodes(System.Xml.XmlDocument,System.Xml.XmlNode@,System.Type,System.String,System.Object)">
+            <summary>
+            Creates the child nodes in the XML doc.
+            </summary>
+            <param name="xDoc">The XML doc.</param>
+            <param name="xTop">The XML top node.</param>
+            <param name="t">The type of node.</param>
+            <param name="nodeName">Name of the node.</param>
+            <param name="obj">The obj to serialize.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.SetDTSProperties(DTS.Properties,System.Xml.XmlNode)">
+            <summary>
+            Sets the DTS package/object properties from a serialized XML node.
+            </summary>
+            <param name="p">The DTS properties.</param>
+            <param name="x">The XML node.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.SetOLEDBProperties(DTS.OleDBProperties,System.Xml.XmlNode)">
+            <summary>
+            Sets the DTS package/object OLEDB properties from a serialized XML node.
+            </summary>
+            <param name="p">The DTS OLEDB properties.</param>
+            <param name="x">The XML node.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.SetProperty(System.Object,System.Reflection.PropertyInfo,System.String)">
+            <summary>
+            Sets the specified DTS property.
+            </summary>
+            <param name="obj">The obj to set properties for.</param>
+            <param name="pi">The PropertyInfo object.</param>
+            <param name="Value">The value to set.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.GetCustomTaskFromID(System.String)">
+            <summary>
+            Gets the custom DTS task from a ID string.
+            </summary>
+            <param name="customTaskID">The custom task ID.</param>
+            <returns>Returns a custom DTS task type.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.CleanInput(System.String)">
+            <summary>
+            Replace invalid characters with empty strings.
+            </summary>
+            <param name="strIn">The string to clean.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSPackage2.ConvertFromAuthTypeFlag(Lewis.SST.DTSPackageClass.DTSPackage2.authTypeFlags)">
+            <summary>
+            Converts from auth type flag to DTS SQL server storage type flag.
+            </summary>
+            <param name="Value">The auth type flag value.</param>
+            <returns>Returns DTS SQL server storage type flag.</returns>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSPackage2.Authentication">
+            <summary>
+            Gets or sets the authentication type.
+            </summary>
+            <value>The authentication type.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSPackage2.Name">
+            <summary>
+            Gets or sets the DTS Package name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSPackage2.Version">
+            <summary>
+            Gets the DTS Package version.
+            </summary>
+            <value>The version.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSPackage2.ID">
+            <summary>
+            Gets the DTS package ID.
+            </summary>
+            <value>The ID.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSPackage2.sourceColumns">
+            <summary>
+            Gets or sets the DTS package source columns.
+            </summary>
+            <value>The source columns.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSPackage2.destinationColumns">
+            <summary>
+            Gets or sets the DTS package destination columns.
+            </summary>
+            <value>The destination columns.</value>
+        </member>
+        <member name="T:Lewis.SST.DTSPackageClass.DTSPackage2.ConnectionType">
+            <summary>
+            The connection type enum
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.DTSPackageClass.DTSPackage2.ConnectionType.SQLOLEDB">
+            <summary>
+            SQLOLEDB connection type.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.DTSPackageClass.DTSPackage2.ConnectionType.FlatFile">
+            <summary>
+            Flat file connection type.
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.DTSPackageClass.DTSPackage2.authTypeFlags">
+            <summary>
+            the authentication type enum
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.DTSPackageClass.DTSPackage2.authTypeFlags.Default">
+            <summary>
+            Default authentication type. Sets type to SQL server login.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.DTSPackageClass.DTSPackage2.authTypeFlags.Trusted">
+            <summary>
+            Trusted authentication type.  Sets type to local Windows login.
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.DTSPackageClass.DTSColumn">
+            <summary>
+            Class to instantiate a DTS.Column object
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.Type">
+            <summary>
+            Gets or sets the Column type.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.NumericScale">
+            <summary>
+            Gets or sets the Column numeric scale.
+            </summary>
+            <value>The numeric scale.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.DataType">
+            <summary>
+            Gets or sets the type of the Column data.
+            </summary>
+            <value>The type of the data.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.Precision">
+            <summary>
+            Gets or sets the Column precision.
+            </summary>
+            <value>The precision.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.Ordinal">
+            <summary>
+            Gets or sets the Column ordinal.
+            </summary>
+            <value>The ordinal.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.Flags">
+            <summary>
+            Gets or sets the Column flags.
+            </summary>
+            <value>The flags.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.ColumnID">
+            <summary>
+            Gets or sets the column ID.
+            </summary>
+            <value>The column ID.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.Size">
+            <summary>
+            Gets or sets the Column size.
+            </summary>
+            <value>The size.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.Name">
+            <summary>
+            Gets or sets the Column name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.Properties">
+            <summary>
+            Gets the DTS Column properties.
+            </summary>
+            <value>The properties.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.Nullable">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:Lewis.SST.DTSPackageClass.DTSColumn"/> is nullable.
+            </summary>
+            <value><c>true</c> if nullable; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumn.Parent">
+            <summary>
+            Gets the Column parent object.
+            </summary>
+            <value>The parent.</value>
+        </member>
+        <member name="T:Lewis.SST.DTSPackageClass.DTSColumns">
+            <summary>
+            Class to hold a collection of DTSColumn objects
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSColumns.Add(Lewis.SST.DTSPackageClass.DTSColumn)">
+            <summary>
+            Adds the specified value.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSColumns.IndexOf(Lewis.SST.DTSPackageClass.DTSColumn)">
+            <summary>
+            The Index of the DTS Column object.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>Returns the index of the DTS Column</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSColumns.Insert(System.Int32,Lewis.SST.DTSPackageClass.DTSColumn)">
+            <summary>
+            Inserts a DTS Column at the specified index.
+            </summary>
+            <param name="index">The index.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSColumns.Remove(Lewis.SST.DTSPackageClass.DTSColumn)">
+            <summary>
+            Removes the specified DTS Column value.
+            </summary>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSColumns.Contains(Lewis.SST.DTSPackageClass.DTSColumn)">
+            <summary>
+            Determines whether the collection [contains] [the specified DTS Column value].
+            </summary>
+            <param name="value">The value.</param>
+            <returns>
+            	<c>true</c> if [contains] [the specified value]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSColumns.OnInsert(System.Int32,System.Object)">
+            <summary>
+            Performs additional custom processes before inserting a new element into the
+            <see cref="T:System.Collections.CollectionBase"/> instance.
+            </summary>
+            <param name="index">The zero-based index at which to insert <paramref name="value"/>.</param>
+            <param name="value">The new value of the element at <paramref name="index"/>.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSColumns.OnRemove(System.Int32,System.Object)">
+            <summary>
+            Performs additional custom processes when removing an element from the
+            <see cref="T:System.Collections.CollectionBase"/> instance.
+            </summary>
+            <param name="index">The zero-based index at which <paramref name="value"/> can be found.</param>
+            <param name="value">The value of the element to remove from <paramref name="index"/>.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSColumns.OnSet(System.Int32,System.Object,System.Object)">
+            <summary>
+            Performs additional custom processes before setting a value in the
+            <see cref="T:System.Collections.CollectionBase"/> instance.
+            </summary>
+            <param name="index">The zero-based index at which <paramref name="oldValue"/> can be found.</param>
+            <param name="oldValue">The value to replace with <paramref name="newValue"/>.</param>
+            <param name="newValue">The new value of the element at <paramref name="index"/>.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSPackageClass.DTSColumns.OnValidate(System.Object)">
+            <summary>
+            Performs additional custom processes when validating a value.
+            </summary>
+            <param name="value">The object to validate.</param>
+        </member>
+        <member name="P:Lewis.SST.DTSPackageClass.DTSColumns.Item(System.Int32)">
+            <summary>
+            Gets or sets the <see cref="T:Lewis.SST.DTSPackageClass.DTSColumn"/> at the specified index.
+            </summary>
+            <value>The DTSColumn value.</value>
+        </member>
+    </members>
+</doc>

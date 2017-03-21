@@ -1,0 +1,43 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProductVersion>3.0</ProductVersion>
+    <ProjectGuid>{183a283c-839c-4c10-9a2c-68ba0f3e6728}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>SST Setup</OutputName>
+    <OutputType>Package</OutputType>
+    <WixToolPath>$(ProgramFiles)\Windows Installer XML v3\bin\</WixToolPath>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <Name>WIXProject-Full</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <IntermediateOutputPath>obj\Debug\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <IntermediateOutputPath>obj\Release\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="SST Setup.wxs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets" />
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+  <PropertyGroup>
+    <PreBuildEvent>copy "$(SolutionDir)Reference DLLs\*.dll" "$(SolutionDir)SST Installer\Files"
+copy "$(SolutionDir)Reference DLLs\*.dll"  "$(SolutionDir)SST Installer\Files\Commandline"
+copy "$(SolutionDir)DTS Command Line\bin\Release\DTSCL.exe"  "$(SolutionDir)SST Installer\Files\Commandline"
+copy "$(SolutionDir)SST Command Line\bin\Release\SSTCL.exe"  "$(SolutionDir)SST Installer\Files\Commandline
+copy "$(SolutionDir)SQL Schema Tool GUI\bin\Release\SSTUI.exe"  "$(SolutionDir)SST Installer\Files"</PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

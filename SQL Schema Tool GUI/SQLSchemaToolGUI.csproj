@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CEEDAEB1-66C6-450F-8CD2-7B7AFB281308}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lewis.SST</RootNamespace>
+    <AssemblyName>SSTUI</AssemblyName>
+    <ApplicationIcon>kcontrol.ico</ApplicationIcon>
+    <StartupObject>Lewis.SST.Gui.App</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SSTassemblies, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Reference DLLs\SSTassemblies.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsyncMethods\AsyncOps.cs" />
+    <Compile Include="AsyncMethods\AsyncUtils.cs" />
+    <Compile Include="Controls\TableTreeNode.cs" />
+    <Compile Include="Controls\DBTreeNode.cs" />
+    <Compile Include="Controls\Document.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ExpressionResultsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ExpressionResultsWindow.Designer.cs">
+      <DependentUpon>ExpressionResultsWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExtTreeNode.cs" />
+    <Compile Include="Controls\RegularExpressions.cs" />
+    <Compile Include="Controls\ServerTreeNode.cs" />
+    <Compile Include="Controls\TextUtils.cs" />
+    <Compile Include="Controls\XmlFoldingStrategy.cs" />
+    <Compile Include="Controls\XmlFormattingStrategy.cs" />
+    <Compile Include="Controls\XmlTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\XPathNavigatorTreeNode.cs" />
+    <Compile Include="Forms\BATDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BATDoc.Designer.cs">
+      <DependentUpon>BATDoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HTMLDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\OptionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\OptionsDialog.Designer.cs">
+      <DependentUpon>OptionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SplashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\XMLDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\XMLDoc.Designer.cs">
+      <DependentUpon>XMLDoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DTSDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Find_Dialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\XMLNodeExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\XMLNodeExplorer.Designer.cs">
+      <DependentUpon>XMLNodeExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SQLDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SQLDoc.Designer.cs">
+      <DependentUpon>SQLDoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SQLSecuritySettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SQLServerExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SQLServerExplorer.Designer.cs">
+      <DependentUpon>SQLServerExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ToolWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ToolWindow.Designer.cs">
+      <DependentUpon>ToolWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="App.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\StaticStrings.cs" />
+    <Compile Include="Settings\XmlSettings.cs" />
+    <EmbeddedResource Include="Forms\XMLDoc.resx">
+      <DependentUpon>XMLDoc.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DTSDoc.resx">
+      <DependentUpon>DTSDoc.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Find_Dialog.resx">
+      <DependentUpon>Find_Dialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\XMLNodeExplorer.resx">
+      <DependentUpon>XMLNodeExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SQLDoc.resx">
+      <DependentUpon>SQLDoc.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SQLSecuritySettings.resx">
+      <DependentUpon>SQLSecuritySettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ToolWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SQLServerExplorer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SQLServerExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\ExpressionResultsWindow.resx">
+      <DependentUpon>ExpressionResultsWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BATDoc.resx">
+      <DependentUpon>BATDoc.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HTMLDoc.resx">
+      <DependentUpon>HTMLDoc.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\optionsControls.xml" />
+    <Content Include="Forms\Options\OptionsDialog.csproj" />
+    <Content Include="kcontrol.ico" />
+    <EmbeddedResource Include="Forms\SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Legal.License.rtf" />
+    <EmbeddedResource Include="Forms\Options\OptionsDialog.resx">
+      <DependentUpon>OptionsDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SyntaxModes.xml" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <EmbeddedResource Include="Resources\BAT.xshd" />
+    <EmbeddedResource Include="Resources\SQL.xshd" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>IF EXIST "$(TargetDir)merge.log" del "$(TargetDir)merge.log"
+"$(TargetDir)merge.bat" "$(TargetDir)"</PreBuildEvent>
+    <PostBuildEvent>IF EXIST "$(TargetDir)merge.log" del "$(TargetDir)merge.log"
+"$(TargetDir)merge.bat" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

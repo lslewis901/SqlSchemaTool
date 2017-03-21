@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Lewis.SST.SQLSchemaTool">
+    <Position X="2.25" Y="1" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Lewis.SST.SQLSchemaTool._NodeType">
+        <TypeIdentifier>
+          <NewMemberFileName>SQLSchemaTool.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEgaAAAAIYBCAAHCEgAAAUAhAECAEgAARAEAEAQQAIA=</HashCode>
+      <FileName>SQLSchemaTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lewis.SST.SQLObjects.Tables">
+    <Position X="7.75" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SQLObjects\Tables.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lewis.SST.SQLObjects.BaseObject">
+    <Position X="5.25" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAgAAAAAAIAACCAAAAAAAAAAAAAAAAAAAAACCAQA=</HashCode>
+      <FileName>SQLObjects\BaseObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

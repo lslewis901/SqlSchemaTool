@@ -1,0 +1,1475 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SST</name>
+    </assembly>
+    <members>
+        <member name="T:Lewis.SST.SQLSchemaTool">
+            <summary>The SQL Schema Tool is a commandline executable application for generating XML schema documents from SQL server databases, 
+            comparing those databases or the XML schema documents, and finally generating a DiffGram XML document from the compare results. 
+            <para>
+            The tool limitations currently are that it does not support "WITH NOCHECK" or extended properties.  Additionally, the tool only 
+            supports adding calculated columns using CREATE TABLE or ALTER TABLE ADD 'column name' SQL statements.  Also, calculated columns
+            are added last in order, so that the columns they may be dependant on will already be in place.  Column Default Constraints are 
+            dropped using sp_unbindefault and they are not re-added later in the diffgram SQL script script using sp_bindefault. 
+            </para>
+            <para>
+            Instead the tool assigns the default value to the column using the ALTER TABLE ADD DEFAULT 'default value' FOR column_name 
+            method.  Doing the diffgram schema this way does cause a DB updated with the diffgram to not compare exactly using the Redgate 
+            SQL Compare tool. However, the equivalent DB functionality is still there.
+            </para>
+            <para>
+            The order of columns will also be different between the source and destination DBs as the calculated columns are added to the 
+            table last.  This by design so as to avoid dependency issues with other columns that the calculation may be dependant on. 
+            Speaking of dependant objects, especially stored procedures, these are output in the order indicated in the sysdepends table.
+            If the sysdepends table gets out of sync with the database, then the stored procedures will likely also be out of sync.
+            </para>
+            <para>
+            This tool uses embedded XSLT 'style sheets' to transform the generated XML docs into the SQL script files.  Also the code was 
+            changed to use XPathDocuments as suppliers of the XML to the XMLTransformation object.  The performance increase is significant 
+            over using the XmlDataDocument object.
+            </para>
+            <para>
+            Check out the following URL for great tips on error handling in SQL: 
+            <see href="http://www.sommarskog.se/error-handling-II.html#whyerrorcheck">SQL Error Handling</see>
+            
+            </para>
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.SPROCPATH">
+            <summary>
+            const value of "/DataBase_Schema/SPROC" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.SPROCTEXT">
+            <summary>
+            const value of "SPROC_TEXT[SPROC_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.SPROCDEP">
+            <summary>
+            const value of "SPROC_DEPENDS[SPROC_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.FUNCPATH">
+            <summary>
+            const value of "/DataBase_Schema/FUNC" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.FUNCTEXT">
+            <summary>
+            const value of "FUNC_TEXT[FUNC_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.FUNCDEP">
+            <summary>
+            const value of "FUNC_DEPENDS[FUNC_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.VIEWPATH">
+            <summary>
+            const value of "/DataBase_Schema/VIEW" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.VIEWTEXT">
+            <summary>
+            const value of "CREATE_TEXT[VIEW_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.VIEWDEP">
+            <summary>
+            const value of "CREATE_TEXT[VIEW_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.TRIGGERPATH">
+            <summary>
+            const value of "VIEW_DEPENDS[VIEW_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.TRIGGERTEXT">
+            <summary>
+            const value of "/DataBase_Schema/TRIGGER" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.DEFAULTPATH">
+            <summary>
+            const value of "TRIGGER_TEXT[TRIGGER_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.DEFAULTTEXT">
+            <summary>
+            const value of "/DataBase_Schema/DEFAULT" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.RULEPATH">
+            <summary>
+            const value of "DEFAULT_TEXT[DEFAULT_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.RULETEXT">
+            <summary>
+            const value of "/DataBase_Schema/RULE" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.UDDTPATH">
+            <summary>
+            const value of "RULE_TEXT[RULE_NAME='" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.UDDTTEXT">
+            <summary>
+            const value of "/DataBase_Schema/UDDT" used in XPATH queries.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._OUTPUTFILE">
+            <summary>
+            2 part xml filename format string requires 2 string params for name
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._DIFFFILE">
+            <summary>
+            2 part xml filename format string requires 2 string params for name
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.ERRORFORMAT">
+            <summary>
+            3 part error format string requires message, source and stack as passed in params
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.nsmgr_Source">
+            <summary>
+            namespace manager for the source schema
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool.nsmgr_Dest">
+            <summary>
+            namespace manager for the destination/target schema
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.SerializeDB(System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.Object,System.Byte,System.String)">
+            <summary>
+            convert DB schema information into XML string/XML file
+            </summary>
+            <param name="SQLServer"></param>
+            <param name="DBName"></param>
+            <param name="UID"></param>
+            <param name="PWD"></param>
+            <param name="SQLfile"></param>
+            <param name="Translate"></param>
+            <param name="Primary"></param>
+            <param name="threaded"></param>
+            <param name="objectsToSerialize"></param>
+            <param name="CustomXSLT"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.SerializeDB(System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.Object,System.Byte,System.String,System.String)">
+            <summary>
+            Converts sql db objects of a connected SQL server database into an XML schema file.
+            </summary>
+            <param name="SQLServer">The string for the SQL server name to connect to.</param>
+            <param name="DBName">The string for the SQL server database name to connect to.</param>
+            <param name="UID">The string for the SQL server user login to use for the SqlConnections object.</param>
+            <param name="PWD">The string for the SQL server user password to use for the SqlConnections object.</param>
+            <param name="SQLfile">The SQL script file that will be translated from the create XML schema file.</param>
+            <param name="Translate">A flag to cause the translation method to be called, thus creating the SQL script file 
+            specified with the SQLfile param.</param>
+            <param name="Primary">A flag to force the FileGroups to only have Primary, no matter what the actual one is in 
+            the database.</param>
+            <param name="threaded">Object that passes in a null or as bool</param>
+            <param name="objectsToSerialize">bit mask of SQL objects to serialize - use the _nodetype enum</param>
+            <param name="CustomXSLT">the full path and name of a custom xslt to be applied to the final xml output</param>
+            <param name="delimTableNames">the comma delimited string of table names to be serialized</param>
+            <returns>Returns the delimited ',' XML + SQL output filename(s)</returns>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.CompareSchema(System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Byte,System.String)">
+            <summary>
+            Compares and outputs a SQL diffgram schema, both as XML and SQL script files.
+            </summary>
+            <param name="sourceFile">The source XML file name to compare with the destination XML file.</param>
+            <param name="destinationFile">The destination/target XML file name to compare with the source XML file.</param>
+            <param name="diffgramFile">The XML Diffgram file name to create.</param>
+            <param name="SQLfile">The SQL script file that will be translated from the diffgram XML schema file.</param>
+            <param name="CompareSprocText">A flag to cause stored procedures to be compared character by character, excluding 
+            whitespace, tabs, linefeeds and carriage returns.</param>
+            <param name="CompareViewText">A flag to cause views to be compared character by character, excluding whitespace, 
+            tabs, linefeeds and carriage returns.</param>
+            <param name="Translate">A flag to cause the translation method to be called, thus creating the SQL script file 
+            specified with the SQLfile param.</param>
+            <param name="objectsToSerialize">bit mask of SQL objects to serialize - use the _nodetype enum</param>
+            <param name="CustomXSLT">the full path and name of a custom xslt to be applied to the final xml output</param>
+            <returns>Returns the delimited ',' XML + SQL output filename(s)</returns>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.CompareTables(System.String,System.Xml.XmlDocument,System.Xml.XmlDocument,System.Xml.XmlDocument,Microsoft.XmlDiffPatch.XmlDiff)">
+            <summary>
+            Compares SQL table schemas from two distinct XML schema files.  These files are generated by the SerializeDB method.
+            </summary>
+            <param name="_serverDB"></param>
+            <param name="xmlSourceDoc">The XmlDataDocument, the source XML to compare with the destination XML.</param>
+            <param name="xmlDestinationDoc">The XmlDataDocument, the destination/target XML to compare with the source XML.</param>
+            <param name="xmlDiffDoc">The XML Diffgram document to update.</param>
+            <param name="xmlDiff">The XmlDiff Object used from the GotDotNet XmlDiff class. Performs the XML node compare.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.CompareTables(System.String,System.Xml.XmlDocument,System.Xml.XmlDocument,System.Xml.XmlDocument,Microsoft.XmlDiffPatch.XmlDiff,System.String)">
+            <summary>
+            Compares SQL table schemas from two distinct XML schema files.  These files are generated by the SerializeDB method.
+            </summary>
+            <param name="_serverDB"></param>
+            <param name="xmlSourceDoc">The XmlDataDocument, the source XML to compare with the destination XML.</param>
+            <param name="xmlDestinationDoc">The XmlDataDocument, the destination/target XML to compare with the source XML.</param>
+            <param name="xmlDiffDoc">The XML Diffgram document to update.</param>
+            <param name="xmlDiff">The XmlDiff Object used from the GotDotNet XmlDiff class. Performs the XML node compare.</param>
+            <param name="TableName">specifies a specific SQL table to compare</param>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.CompareTableObjs(System.String,System.Xml.XmlNode,System.Xml.XmlNode,System.Xml.XmlNode,System.Xml.XmlDocument,Microsoft.XmlDiffPatch.XmlDiff)">
+            <summary>
+            Compares table indexes, table constraints, and table FK/PK references from two distinct XML schema files. These 
+            files are generated by the SerializeDB method.  This method is called by the CompareTables method.
+            </summary>
+            <param name="objType">The type of database table related object collection to compare, i.e. indexes, constraints 
+            (check and default), and references.</param>
+            <param name="SourceTable">The SourceTable XML Node containing all table object related child nodes to compare with 
+            the destination child nodes.</param>
+            <param name="DestTable">The DestTable XML Node containing all table object related child nodes to compare with 
+            the source child nodes.</param>
+            <param name="DiffTable">The XML Diffgram table node to update.</param>
+            <param name="xmlDiffDoc">The XML Diffgram document to update.</param>
+            <param name="xmlDiff">The XmlDiff Object used from the GotDotNet XmlDiff class. Performs the XML node compare.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.CompareObjects(System.String,System.Xml.XmlDocument,System.Xml.XmlDocument,System.Xml.XmlDocument,Lewis.SST.SQLSchemaTool._NodeType,Microsoft.XmlDiffPatch.XmlDiff,System.Boolean)">
+            <summary>
+            Compares database objects (except tables and columns) from two distinct XML schema files. These files are generated 
+            by the SerializeDB method.  This method is called from the CompareSchema method.
+            </summary>
+            <param name="_serverDB">Used to identify which server the compare objects came from</param>
+            <param name="xmlSourceDoc">The XmlDataDocument, the source XML to compare with the destination XML.</param>
+            <param name="xmlDestinationDoc">The XmlDataDocument, the destination/target XML to compare with the source XML.</param>
+            <param name="xmlDiffDoc">The XML Diffgram document to update.</param>
+            <param name="type">The type of database object collection to compare, i.e. defaults, UDDTs, rules, views, functions, 
+            stored procedures, and triggers.</param>
+            <param name="xmlDiff">The XmlDiff Object used from the GotDotNet XmlDiff class. Performs the XML node compare.</param>
+            <param name="CompareTextFlag">Flag that performs full text compare between objects</param>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.CompareObjects(System.String,System.Xml.XmlDocument,System.Xml.XmlDocument,System.Xml.XmlDocument,Lewis.SST.SQLSchemaTool._NodeType,Microsoft.XmlDiffPatch.XmlDiff,System.Boolean,System.String)">
+            <summary>
+            Compares database objects (except tables and columns) from two distinct XML schema files. These files are generated 
+            by the SerializeDB method.  This method is called from the CompareSchema method.
+            </summary>
+            <param name="_serverDB">Used to identify which server the compare objects came from</param>
+            <param name="xmlSourceDoc">The XmlDataDocument, the source XML to compare with the destination XML.</param>
+            <param name="xmlDestinationDoc">The XmlDataDocument, the destination/target XML to compare with the source XML.</param>
+            <param name="xmlDiffDoc">The XML Diffgram document to update.</param>
+            <param name="type">The type of database object collection to compare, i.e. defaults, UDDTs, rules, views, functions, 
+            stored procedures, and triggers.</param>
+            <param name="xmlDiff">The XmlDiff Object used from the GotDotNet XmlDiff class. Performs the XML node compare.</param>
+            <param name="CompareTextFlag">Flag that performs full text compare between objects</param>
+            <param name="sqlObjectName">specifies a specific SQL object to compare</param>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.CompareColumns(System.String,System.Xml.XmlNodeList,System.Xml.XmlNodeList,System.Xml.XmlDocument,Microsoft.XmlDiffPatch.XmlDiff)">
+            <summary>
+            Compares table columns from two distinct XML schema files. These files are generated by the SerializeDB method.  
+            This method is called from the CompareTables method.
+            </summary>
+            <param name="tableName">The string value representing the current SQL table object.</param>
+            <param name="xnlSource">The XmlNodeList, a collection of source XML nodes to compare with the destination XML 
+            nodes.</param>
+            <param name="xnlDestination">The XmlNodeList, a collection of destination/target XML nodes to compare with the 
+            source XML nodes.</param>
+            <param name="xmlDiffDoc">The XML Diffgram object to update.</param>
+            <param name="xmlDiff">The XmlDiff Object used from the GotDotNet XmlDiff class. Performs the XML node compare.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.CheckColumnDependencies(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Collections.Hashtable@,System.Xml.XmlNode,System.Xml.XmlNode,System.Xml.XmlDocument)">
+            <summary>
+            Checks the column dependencies for Indexes, Constraints and References.
+            </summary>
+            <param name="column_Name">Name of the column.</param>
+            <param name="table_Name">Name of the table.</param>
+            <param name="elementName">Name of the new element to add to XML doc.</param>
+            <param name="parentNodeName">Name of the parent node.</param>
+            <param name="childNodeName">Name of the child node.</param>
+            <param name="checkNodeName">Name of the check node.</param>
+            <param name="Dropped">if set to <c>true</c> [dropped].</param>
+            <param name="htDropAdd">The ht drop add hashtable, by ref.</param>
+            <param name="Found">The found XML node.</param>
+            <param name="xn">The xn XML node.</param>
+            <param name="xmlDiffDoc">xmlDiffDoc is the XML diffgram doc.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.RecurseDependencies(System.String,System.Collections.SortedList@,System.Collections.SortedList@,System.Int32,System.Int32@)">
+            <summary>
+            Recursive procedure to examine and sort a SortedList of database objects with dependencies against a SortedList 
+            of dependencies to determine the proper dependency order.
+            </summary>
+            <param name="_serverDB">SQL Server string used to select nodes.</param>
+            <param name="sl">The SortedList of database objects to sort based on their dependencies.</param>
+            <param name="slDep">The SortedList of dependencies.</param>
+            <param name="startAt">The starting index of the SortedList containing the database objects.</param>
+            <param name="loopcnt">The count of how many times the recursive method has called itself.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.SortDependencies(System.String,System.String,System.String,System.Xml.XmlDocument@)">
+            <summary>
+            Sorts the view, function, and stored procedure dependencies for the SQL schema read from a SQL server and database.  
+            This method calls the RecurseDependencies method.
+            </summary>
+            <param name="_serverDB">SQL Server string used to select nodes.</param>
+            <param name="NodePath">XPath string used to select nodes to recurse through.</param>
+            <param name="NodeSelect">XPath string used to select individual node from XmlNodeList object generated using the 
+            NodePath string.</param>
+            <param name="xmlDoc">By ref the XmlDocument to sort the nodes selected using the NodePath string.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.FindNode(System.Xml.XmlNodeList,System.String,System.String)">
+            <summary>
+            Finds any XMLnode that contains the text in the parameter findString
+            </summary>
+            <param name="xnl">XmlNodeList object</param>
+            <param name="findString">Search string.</param>
+            <param name="node">Node name format string, i.e.: &lt;nodename&gt;{0}&lt;/nodename&gt; </param>
+            <returns>Returns the found XML node or a null if not found.</returns>
+        </member>
+        <member name="M:Lewis.SST.SQLSchemaTool.Sleep">
+            <summary>
+            Causes the current thread to sleep for 20 iterations
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.SQLSchemaTool._NodeType">
+            <summary>
+            Indicates the node type within the XML document
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._NodeType.SPROC">
+            <summary>
+            Indicates stored procedure node types.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._NodeType.VIEW">
+            <summary>
+            Indicates view node types.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._NodeType.FUNCTION">
+            <summary>
+            Indicates function node types.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._NodeType.TRIGGER">
+            <summary>
+            Indicates trigger node types.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._NodeType.DEFAULT">
+            <summary>
+            Indicates default node types.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._NodeType.RULE">
+            <summary>
+            Indicates rule node types.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._NodeType.UDDT">
+            <summary>
+            Indicates UDDT node types.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLSchemaTool._NodeType.TABLE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.UDDTs">
+            <summary>
+            Summary description for UDDTs class which inherits from a DataSet class.
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.BaseObject">
+            <summary>
+            Base object class for all SQL objects
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.BaseObject.logger">
+            <summary>
+            Logger instance
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.BaseObject._dbName">
+            <summary>
+            db name
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.BaseObject.no_precision_types">
+            <summary>
+            an arraylist used by the UDDTs class
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.BaseObject.#ctor">
+            <summary>
+            default
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.BaseObject.#ctor(System.String)">
+            <summary>
+            ctor
+            </summary>
+            <param name="DBName"></param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.BaseObject.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            abstract generic class to be overridden on child class
+            </summary>
+            <typeparam name="t"></typeparam>
+            <param name="_connection"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.BaseObject.Add(System.Data.DataTable)">
+            <summary>
+            Adds the specified _data table.
+            </summary>
+            <param name="_dataTable">The _data table.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.BaseObject._MergeFailed(System.Object,System.Data.MergeFailedEventArgs)">
+            <summary>
+            Handles the MergeFailed event of the UDTs control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.Data.MergeFailedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.BaseObject.AddMissingTableColumn(System.Data.DataSet@,System.String,System.String,System.Boolean)">
+            <summary>
+            Adds the missing table and the missing name column.
+            <para>
+            sql select statements don't always return the same number of tables so
+            we have to add one if it wasn't returned,
+            otherwise our schema is only good to the lowest number of tables 
+            returned by the SQL statement.
+            </para>
+            </summary>
+            <param name="_dsFields">The _DS fields.</param>
+            <param name="tableName">Name of the table.</param>
+            <param name="columnName">the new column Name</param>
+            <param name="addText"></param>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.BaseObject.Item(System.Int32)">
+            <summary>
+            Gets the <see cref="T:System.Data.DataTable"/> at the specified index.
+            </summary>
+            <value>The integer Index to select a DataTable from the DataSet</value>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.UDDTs.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.UDDTs"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.UDDTs.#ctor(System.String)">
+            <summary>
+            Main Entry point of the UDDTs object which inherits from a DataSet class.
+            </summary>
+            <param name="DBName">The string name of the Database.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.UDDTs.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            Retrieves the UDDT objects from the specified SQL server DB
+            </summary>
+            <param name="_connection">The SQL Connection used for the SQL server.</param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Lewis.SST.SecurityMethods.Security">
+            <summary>
+            Security class handles encryption/decryption for connection strings
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SecurityMethods.Security.ZeroMemory(System.String@,System.Int32)">
+            <summary>
+            Call this function to remove the key from memory after use for security.
+            </summary>
+            <param name="Destination"></param>
+            <param name="Length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SecurityMethods.Security.GenerateKey">
+            <summary>
+            Function to Generate 64 bit Key.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SecurityMethods.Security.EncryptString(System.String,System.String)">
+            <summary>
+            static method to encrypt passed in string using passed in public key
+            </summary>
+            <param name="plainString"></param>
+            <param name="sKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SecurityMethods.Security.DecryptString(System.String,System.String)">
+            <summary>
+            static method to decrypt passed in string using passed in public key
+            </summary>
+            <param name="encryptedString"></param>
+            <param name="sKey"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.Rules">
+            <summary>
+            Summary description for Rules class which inherits from a DataSet class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Rules.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.Rules"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Rules.#ctor(System.String)">
+            <summary>
+            Main Entry point of the Rules object which inherits from a DataSet class.
+            </summary>
+            <param name="DBName">The string name of the Database.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Rules.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            Retrieves the Rule objects from the specified SQL server DB
+            </summary>
+            <param name="_connection">The SQL Connection used for the SQL server.</param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.Sprocs">
+            <summary>
+             Summary description for Sprocs class which inherits from a DataSet class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Sprocs.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.Sprocs"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Sprocs.#ctor(System.String)">
+            <summary>
+            Main Entry point of the Sprocs object which inherits from a DataSet class
+            </summary>
+            <param name="DBName">The string name of the Database.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Sprocs.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            Retrieves the Stored procedure objects from the specified SQL server DB
+            </summary>
+            <param name="_connection">The SQL Connection used for the SQL server.</param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Lewis.SST.SQLMethods.SQLServers">
+            <summary>
+            Class to enumerate SQL servers using the SqlDataSourceEnumerator.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLServers.GetSQLServers">
+            <summary>
+            Gets the array of SQL servers that are available on the LAN.
+            </summary>
+            <returns>string[] of SQL server names</returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLServers.GetDBNames(System.Data.SqlClient.SqlConnection)">
+            <summary>
+            method returns all dbnames defined on the SQL server, specified by the SQL connection object
+            </summary>
+            <param name="sqlConn"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Lewis.SST.SQLMethods.SecurityType">
+            <summary>
+            SQL server login security types
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLMethods.SecurityType.Integrated">
+            <summary>
+            indicates using integrated Windows login security model.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLMethods.SecurityType.Mixed">
+            <summary>
+            indicates using SQL login security model.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLMethods.SecurityType.NULL">
+            <summary>
+            security type not yet determined
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.SQLMethods.SQLConnections">
+            <summary>
+            SQLConnections Collection class.  A class to create and contain multiple SqlConnection objects.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLMethods.SQLConnections._secureConnect">
+            <summary>
+            connect format string used by methods to format Secure SQL connection string
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLMethods.SQLConnections._unsecureConnect">
+            <summary>
+            connect format string used by methods to format NonSecure SQL connection string
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.#ctor">
+            <summary>
+            public default ctor
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.#ctor(System.String)">
+            <summary>
+            Instantiates a new SqlConnections class using a connection string.
+            The following example illustrates a typical connection string.
+            "Persist Security Info=False;Integrated Security=SSPI;database=northwind;server=mySQLServer"
+            </summary>
+            <param name="ConnectionString">The connection string that includes the source database name, and other parameters needed to establish the initial connection.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.#ctor(System.String,System.String)">
+            <summary>
+            Instantiates a new SqlConnections class using a connection string.  
+            This instantiated class assumes a secure connection using a trusted Windows login.
+            </summary>
+            <param name="SqlServer">The SqlServer string is the SQL server name to make the connection to.</param>
+            <param name="Database">The Database string is the SQL database name to make the connection to.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.#ctor(System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Instantiates a new SqlConnections class using a connection string.
+            This instantiated class assumes a unsecure connection using a valid SQL login.
+            </summary>
+            <param name="SqlServer">The SqlServer string is the SQL server name to make the connection to.</param>
+            <param name="Database">The Database string is the SQL database name to make the connection to.</param>
+            <param name="UserID">The UserID string is a SQL server user login name used to validate the connection.</param>
+            <param name="Password">The Password string is a SQL server user password name used to validate the connection.</param>
+            <param name="savePassword">The true false flag for persisting the password when saving the settings on close.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.getIndex(Lewis.SST.SQLMethods.SQLConnection)">
+            <summary>
+            get the int index value of the server connection object
+            </summary>
+            <param name="_connection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.getIndex(System.String)">
+            <summary>
+            get the int index value of the server connection
+            </summary>
+            <param name="ServerName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.Add(Lewis.SST.SQLMethods.SQLConnection)">
+            <summary>
+            adds a new SqlConnection object to the SqlConnections class.
+            </summary>
+            <param name="_connection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.Add(System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            adds a new SqlConnection object to the SqlConnections class.
+            </summary>
+            <param name="SqlServer"></param>
+            <param name="Database"></param>
+            <param name="UserID"></param>
+            <param name="Password"></param>
+            <param name="savePassword"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.Add(System.String,System.String)">
+            <summary>
+            adds a new SqlConnection object to the SqlConnections class.
+            </summary>
+            <param name="SqlServer"></param>
+            <param name="Database"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.Add(System.String)">
+            <summary>
+            adds a new SqlConnection object to the SqlConnections class.
+            </summary>
+            <param name="ConnectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.AddEncrypted(System.String,System.String,System.Boolean)">
+            <summary>
+            adds a new SqlConnection object to the SqlConnections class with an encrypted connection string
+            </summary>
+            <param name="encryptedConnectionString"></param>
+            <param name="sKey"></param>
+            <param name="savePassword"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.Remove(Lewis.SST.SQLMethods.SQLConnection)">
+            <summary>
+            removes SqlConnection object from the collection
+            </summary>
+            <param name="_connection"></param>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnections.Remove(System.String)">
+            <summary>
+            removes SqlConnection object from the collection
+            </summary>
+            <param name="ServerName"></param>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnections.Item(System.Int32)">
+            <summary>
+            Gets the index of the current SqlConnection object.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnections.Item(System.String)">
+            <summary>
+            returns specified SqlConnection using string name
+            </summary>
+            <param name="ServerName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Lewis.SST.SQLMethods.SQLConnection">
+            <summary>
+            SQLConnection class wraps SqlConnection class to add additional data elements
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnection.#ctor(System.String)">
+            <summary>
+            Constructor with connection string param
+            </summary>
+            <param name="connectionString"></param>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLConnection.#ctor(System.String,System.Boolean)">
+            <summary>
+            Constructor with connection string param, and a save the password param
+            </summary>
+            <param name="connectionString"></param>
+            <param name="savePassword"></param>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnection.sqlConnection">
+            <summary>
+            Property to get the SqlConnection
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnection.ConnectionString">
+            <summary>
+            Property to get the Connectionstring
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnection.securityType">
+            <summary>
+            Property to get the security type used by the connection
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnection.User">
+            <summary>
+            Property to get the user set on the connection
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnection.Server">
+            <summary>
+            Property to get the server name 
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnection.SavePassword">
+            <summary>
+            Property to get the SavePassword setting
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnection.Password">
+            <summary>
+            Property to get the saved password
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLMethods.SQLConnection.EncryptedConnectionString">
+            <summary>
+            Property to get the encrypted connection string - used when saving the connection settings
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.Tables">
+            <summary>
+            Class to serialize the DB tables which inherits from a DataSet class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Tables.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.Tables"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Tables.#ctor(System.String)">
+            <summary>
+            Main Entry point of the Tables object which inherits from a DataSet class.
+            </summary>
+            <param name="DBName">The string name of the Database.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Tables.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            Retrieves the Table objects from the specified SQL server DB.
+            </summary>
+            <param name="_connection">The SQL Connection used for the SQL server.</param>
+            <param name="args">Flag to force use of the Primary FileGroup for the table.</param>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.SqlQueryStrings">
+            <summary>
+            const strings class
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetDataBaseObjects">
+            <summary>
+            const string to get all database objects names, types, and id
+            expected object types for {1} are a delimited string of 'U','P','FN','TF','V'
+            ignores all dt_xxx, sysxxx, and syncobj_xxx database objects
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetUDDTsList">
+            <summary>
+            const ssql statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetTriggersSchema">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetTriggersList">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetTablesList">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetTableSchema">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetIndexes">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetColumns">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetTableFileGroups">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.ForceTableFileGroups">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetTableReferences">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetSprocSchema">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetSprocsList">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetRulesList">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetRulesSchema">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetFuncsList">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetFuncSchema">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetDefaultsList">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetDefaultsSchema">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetDTSPackagesList">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetViewsList">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.SqlQueryStrings.GetViewSchema">
+            <summary>
+            const SQL statement
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.DTSPackages">
+            <summary>
+            Class to list DTS packages residing on SQL server.
+            Code for this was borrowed from: http://www.extremeexperts.com/SQL/FAQ/ListDTSPackagesVBNET.aspx 
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.DTSPackages.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.DTSPackages"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.DTSPackages.#ctor(System.String)">
+            <summary>
+            Main Entry point of the Funcs object which inherits from a DataSet class
+            </summary>
+            <param name="DBName">The string name of the Database.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.DTSPackages.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            GetDTSPackages
+            </summary>
+            <typeparam name="DTSPackages"></typeparam>
+            <param name="_connection"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.DTSPackages.GetDTSPackages(System.Data.SqlClient.SqlConnection,System.Boolean)">
+            <summary>
+            Populates this object with a dataset containing the list of DTS packages on the selected SQL server.
+            </summary>
+            <param name="_connection">SQL connection object.</param>
+            <param name="MostRecentVersion">if set to <c>true</c> [most recent version].</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.DTSPackages.GetDTSPackages(System.String,System.Boolean,System.String,System.String,System.Boolean)">
+            <summary>
+            Gets the DTS packages list and pushes it into a dataset.
+            </summary>
+            <param name="SQLServerName">Name of the SQL server.</param>
+            <param name="IntegratedSecurity">if set to <c>true</c> [integrated security].</param>
+            <param name="User">The user.</param>
+            <param name="Password">The password.</param>
+            <param name="MostRecentVersion">if set to <c>true</c> [most recent version].</param>
+            <returns>returns a dataset containing the list of DTS packages on the selected SQL server.</returns>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.Views">
+            <summary>
+             Summary description for Views class which inherits from a DataSet class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Views.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.Views"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Views.#ctor(System.String)">
+            <summary>
+            Main Entry point of the Views object which inherits from a DataSet class
+            </summary>
+            <param name="DBName">The string name of the Database.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Views.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            Retrieves the View objects from the specified SQL server DB
+            </summary>
+            <param name="_connection">The SQL Connection used for the SQL server.</param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.Triggers">
+            <summary>
+            Summary description for Triggers class which inherits from a DataSet class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Triggers.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.Triggers"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Triggers.#ctor(System.String)">
+            <summary>
+            Main Entry point of the Triggers object which inherits from a DataSet class
+            </summary>
+            <param name="DBName">The string name of the Database.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Triggers.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            Retrieves the Trigger objects from the specified SQL server DB
+            </summary>
+            <param name="_connection">The SQL Connection used for the SQL server.</param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.Funcs">
+            <summary>
+            Summary description for Funcs class which inherits from a DataSet class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Funcs.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.Funcs"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Funcs.#ctor(System.String)">
+            <summary>
+            Main Entry point of the Funcs object which inherits from a DataSet class
+            </summary>
+            <param name="DBName">The string name of the Database.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Funcs.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            Retrieves the Function objects from the specified SQL server DB
+            </summary>
+            <param name="_connection">The SQL Connection used for the SQL server.</param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.Defaults">
+            <summary>
+            Summary description for Defaults class which inherits from a DataSet class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Defaults.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.Defaults"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Defaults.#ctor(System.String)">
+            <summary>
+            Main Entry point of the Defaults object which inherits from a DataSet class
+            </summary>
+            <param name="DBName">The string name of the Database.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Defaults.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            Retrieves the Default objects from the specified SQL server DB
+            </summary>
+            <param name="_connection">The SQL Connection used for the SQL server.</param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Lewis.SST.Help.HelpText">
+            <summary>
+            Static Helptext class
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.Help.HelpText._help">
+            <summary>
+            const value for the help text that is displayed when the /? parameter is used. 
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.Help.HelpText.DisplayDefaultHelp">
+            <summary>
+            static method to display default help dialog
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.Help.HelpText.DisplayDefaultHelp(System.String)">
+            <summary>
+            Method displays default help with a string title parameter
+            </summary>
+            <param name="DialogTitle"></param>
+        </member>
+        <member name="M:Lewis.SST.Help.HelpText.DisplayDefaultHelp(System.String,System.String)">
+            <summary>
+            statis method to display passed in help text
+            </summary>
+            <param name="helpText"></param>
+            <param name="DialogTitle"></param>
+        </member>
+        <member name="P:Lewis.SST.Help.HelpText.SSTUsageString">
+            <summary>
+            static property for help string
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.Help.About">
+            <summary>
+            Class to display About/error message form.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.Help.About.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.Help.About.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.Help.About"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.Help.About.#ctor(System.Reflection.Assembly,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="a"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:Lewis.SST.Help.About.#ctor(System.Reflection.Assembly)">
+            <summary>
+            The about class constructor
+            </summary>
+            <param name="a">assembly</param>
+        </member>
+        <member name="M:Lewis.SST.Help.About.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.Help.About.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.Help.About.ShowText(System.String)">
+            <summary>
+            Shows the text method shows the current about information.
+            </summary>
+            <param name="text">The text.</param>
+        </member>
+        <member name="P:Lewis.SST.Help.About.Message">
+            <summary>
+            public property to set the message property to value
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.Jobs">
+            <summary>
+            Jobs Class - Not Yet Implemented.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Jobs.#ctor">
+            <summary>
+            Not yet implemented.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.Jobs.GetObject``1(System.Data.SqlClient.SqlConnection,System.Object[])">
+            <summary>
+            Jobs call
+            </summary>
+            <typeparam name="Jobs"></typeparam>
+            <param name="_connection"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.ColumnCollection">
+            <summary>
+            Collection of Column Objects.  Includes a method to serialize the entire collection. <seealso cref="T:Lewis.SST.SQLObjects.COLUMN"/>
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.ColumnCollection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.SQLObjects.ColumnCollection"/> class. Default constructor required for serialization.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.ColumnCollection.#ctor(System.String)">
+            <summary>
+            Creates the ColumnCollection instance with a passed in tablename
+            </summary>
+            <param name="tableName">String value for the SQL table name.</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.ColumnCollection.Add(Lewis.SST.SQLObjects.COLUMN)">
+            <summary>
+            Adds a Column object to the ColumnCollection.
+            </summary>
+            <param name="_column">Column Object to add</param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.ColumnCollection.Contains(Lewis.SST.SQLObjects.COLUMN)">
+            <summary>
+            Checks to see if the Column object is contained in the ColumnCollection.
+            </summary>
+            <param name="value">Column Object to check for.</param>
+            <returns>returns true if Column object is in the ColumnCollection.</returns>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.ColumnCollection.SerializeAsXmlNode(System.Xml.XmlDocument)">
+            <summary>
+            Provides a method to serialize the entire column collection
+            </summary>
+            <param name="doc">Parent XMLDoc that the returned XML node will be appended to.</param>
+            <returns>XMLNode that contains the serialized ColumnCollection.</returns>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.ColumnCollection.TableName">
+            <summary>
+            Gets or sets the Tablename for the ColumnCollection object
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.ColumnCollection.SchemaAction">
+            <summary>
+            Gets or sets the SchemaAction Enum for the ColumnCollection object.
+            This is used in the serialization to create an Action attribute for each table object.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.ColumnCollection.Item(System.Int32)">
+            <summary>
+            Gets the current Column object index from the ColumnCollection.
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.COLUMN">
+            <summary>
+            The Column Class, for creating an object that represents a single SQL table column's schema information. <seealso cref="T:Lewis.SST.SQLObjects.ColumnCollection"/>
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.COLUMN.#ctor">
+            <summary>
+            main entry point to instantiate the column class object
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.COLUMN.#ctor(System.String)">
+            <summary>
+            main entry point to instantiate the column class object with a string Column_Name
+            </summary>
+            <param name="Column_Name"></param>
+        </member>
+        <member name="M:Lewis.SST.SQLObjects.COLUMN.Convert(System.Xml.XmlNode)">
+            <summary>
+            Converts an XML node with the expected layout into a valid column object.
+            </summary>
+            <param name="xn">The XML column node to be converted into a column object.</param>
+            <returns>The Column object result of the conversion process.</returns>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Action">
+            <summary>
+            Gets or sets the Column Object's ColumnAction property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.TABLE_NAME">
+            <summary>
+            Gets or sets the Column Object's TABLE_NAME property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Column_Name">
+            <summary>
+            Gets or sets the Column Object's Column_Name property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Type">
+            <summary>
+            Gets or sets the Column Object's Type property.
+            The Type property is the same as a UDDT type or 
+            if there is no UDDT bound to the Column, the type
+            will be the same as the Base_Type.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Base_Type">
+            <summary>
+            Gets or sets the Column Object's Base_Type property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Length">
+            <summary>
+            Gets or sets the Column Object's Length property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Prec">
+            <summary>
+            Gets or sets the Column Object's Prec (precision) property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Scale">
+            <summary>
+            Gets or sets the Column Object's Scale property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Seed">
+            <summary>
+            Gets or sets the Column Object's Seed property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Increment">
+            <summary>
+            Gets or sets the Column Object's Increment property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.isNullable">
+            <summary>
+            Gets or sets the Column Object's isNullable property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.isIdentity">
+            <summary>
+            Gets or sets the Column Object's isIdentity property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.isComputed">
+            <summary>
+            Gets or sets the Column Object's isComputed property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Default_Orig_Name">
+            <summary>
+            Gets or sets the Column Object's Default_Orig_Name property.
+            This property is used to find the original default name so 
+            that it can be removed when altering or dropping the column.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Default_Name">
+            <summary>
+            Gets or sets the Column Object's Default_Name property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Rule_Name">
+            <summary>
+            Gets or sets the Column Object's Rule_Name property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Rule_Owner">
+            <summary>
+            Gets or sets the Column Object's Rule_Owner property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Rule_Orig_Name">
+            <summary>
+            Gets or sets the Column Object's Rule_Orig_Name property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Rule_Orig_Owner">
+            <summary>
+            Gets or sets the Column Object's Rule_Orig_Owner property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Default_Owner">
+            <summary>
+            Gets or sets the Column Object's Default_Owner property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Default_Value">
+            <summary>
+            Gets or sets the Column Object's Default_Value property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Default_Orig_Value">
+            <summary>
+            Gets or sets the Column Object's Default_Orig_Value property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.NotforRepl">
+            <summary>
+            Gets or sets the Column Object's NotforRepl property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.isRowGuidCol">
+            <summary>
+            Gets or sets a value indicating whether [row GUID col].
+            </summary>
+            <value><c>true</c> if [row GUID col]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.ORIG_RowGuidCol">
+            <summary>
+            Gets or sets a bool value indicating ORIG_isRowGuidCol is <c>true</c> or <c>false</c>.
+            </summary>
+            <value>if ORIG_RowGuidCol <c>true</c>; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.FullText">
+            <summary>
+            Gets or sets the Column Object's FullText property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.AnsiPad">
+            <summary>
+            Gets or sets the Column Object's AnsiPad property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Collation">
+            <summary>
+            Gets or sets the Column Object's Collation property.
+            </summary>
+        </member>
+        <member name="P:Lewis.SST.SQLObjects.COLUMN.Calc_Text">
+            <summary>
+            Gets or sets the calc_ text.
+            </summary>
+            <value>The calc_ text.</value>
+        </member>
+        <member name="T:Lewis.SST.SQLObjects.COLUMN.ColumnAction">
+            <summary>
+            Column Action enumeration used to create an XML attribute for XML table nodes and column nodes.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.COLUMN.ColumnAction.Add">
+            <summary>
+            Indicates that this object/node should be added to the destination SQL server database.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.COLUMN.ColumnAction.Alter">
+            <summary>
+            Indicates that this object/node should be altered or changed to the destination SQL server database.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.COLUMN.ColumnAction.Drop">
+            <summary>
+            Indicates that this object/node should be dropped or removed to the destination SQL server database.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.SQLObjects.COLUMN.ColumnAction.UnChanged">
+            <summary>
+            Indicates that this object/node has no differences on the destination SQL server database from the source.
+            </summary>
+        </member>
+        <member name="T:Lewis.SST.SQLMethods.SQLData">
+            <summary>
+            Methods to get SQL data for copy and serialization
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLData.GetDBTableNames(System.String,System.Data.SqlClient.SqlConnection)">
+            <summary>
+            gets an array of the table names for a given database
+            </summary>
+            <param name="DBName">data base name to get list of tables from</param>
+            <param name="connection">Sql Connection object attached to database</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLData.CompareData(System.String,System.String,System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlConnection,System.Boolean)">
+            <summary>
+            compares two xml data sources as xml strings
+            </summary>
+            <param name="querySource">the SQL query text for the source</param>
+            <param name="queryTarget">the SQL query text for the target</param>
+            <param name="connectionSource">The sql connection object for the source</param>
+            <param name="connectionTarget">The sql connection object for the target</param>
+            <param name="asTextFile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLData.GetXMLData(System.String,System.Data.SqlClient.SqlConnection)">
+            <summary>
+            method to convert datatable to xml string
+            </summary>
+            <param name="query">the SQL query text</param>
+            <param name="connection">The sql connection object</param>
+            <returns>an xml result string</returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLData.GetData(System.String,System.Data.SqlClient.SqlConnection)">
+            <summary>
+            gets the data from a SQL query and puts it into a DataTable
+            </summary>
+            <param name="query"></param>
+            <param name="connection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLData.SideBySideXmlNotepadHeader(System.String,System.String,System.IO.TextWriter)">
+            <summary>
+            The html header used by XmlNotepad.
+            </summary>
+            <param name="sourceXmlFile">name of baseline xml data</param>
+            <param name="changedXmlFile">name of file being compared</param>
+            <param name="resultHtml">Output file</param>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLData.ConstructData(System.Data.SqlClient.SqlDataReader)">
+             <summary>
+             Constructs the data which was extracted
+             from the database according to user's query.
+             </summary>
+             <param name="reader">SqlReader - holds the queried data.</param>
+            <returns>Queried data in DataTable.</returns>
+        </member>
+        <member name="M:Lewis.SST.SQLMethods.SQLData.CopyTable(System.Data.IDbConnection,System.Data.IDbConnection,System.String,System.String)">
+            <summary>
+            This method will copy the data in a table 
+            from one database to another. The
+            source and destination can be from any type of 
+            .NET database provider.
+            </summary>
+            <param name="source">Source database connection</param>
+            <param name="destination">Destination database connection</param>
+            <param name="sourceSQL">Source SQL statement</param>
+            <param name="destinationTableName">Destination table name</param>
+        </member>
+    </members>
+</doc>

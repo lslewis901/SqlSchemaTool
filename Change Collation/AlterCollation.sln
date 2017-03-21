@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlterCollation", "AlterCollation.csproj", "{51CBA8A8-38DE-42D2-9698-21D30DAF795B}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{51CBA8A8-38DE-42D2-9698-21D30DAF795B}.Debug.ActiveCfg = Debug|.NET
+		{51CBA8A8-38DE-42D2-9698-21D30DAF795B}.Debug.Build.0 = Debug|.NET
+		{51CBA8A8-38DE-42D2-9698-21D30DAF795B}.Release.ActiveCfg = Release|.NET
+		{51CBA8A8-38DE-42D2-9698-21D30DAF795B}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

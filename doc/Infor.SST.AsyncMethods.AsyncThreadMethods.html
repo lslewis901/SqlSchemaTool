@@ -1,0 +1,105 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>AsyncThread Methods</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">SQL Schema Tool Help</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">AsyncThread Methods</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p>The methods of the <b>AsyncThread</b> class are listed below. For a complete list of <b>AsyncThread</b> class members, see the <a href="Infor.SST.AsyncMethods.AsyncThreadMembers.html">AsyncThread Members</a> topic.</p>
+      <h4 class="dtH4">Public Static Methods</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><img src="static.gif" /><a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassEqualsTopic.htm">Equals</a> (inherited from <b>Object</b>)</td><td width="50%">
+        Determines whether the specified <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a> instances are considered equal.
+      </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><img src="static.gif" /><a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassReferenceEqualsTopic.htm">ReferenceEquals</a> (inherited from <b>Object</b>)</td><td width="50%">
+        Determines whether the specified <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a> instances are the same instance.
+      </td></tr></table>
+      </div>
+      <h4 class="dtH4">Public Instance Methods</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="Infor.SST.AsyncMethods.AsyncOperation.Cancel.html">Cancel</a> (inherited from <b>AsyncOperation</b>)</td><td width="50%"> Attempt to cancel the current operation. This returns immediately to the caller. No guarantee is made as to whether the operation will be successfully cancelled. All that can be known is that at some point, one of the three events Completed, Cancelled, or Failed will be raised at some point. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="Infor.SST.AsyncMethods.AsyncOperation.CancelAndWait.html">CancelAndWait</a> (inherited from <b>AsyncOperation</b>)</td><td width="50%"> Attempt to cancel the current operation and block until either the cancellation succeeds or the operation completes. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassEqualsTopic.htm">Equals</a> (inherited from <b>Object</b>)</td><td width="50%">
+        Determines whether the specified <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a> is equal to the current <b>Object</b>.
+      </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassGetHashCodeTopic.htm">GetHashCode</a> (inherited from <b>Object</b>)</td><td width="50%">
+        Serves as a hash function for a particular type, suitable for use in hashing algorithms and data structures like a hash table.
+      </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassGetTypeTopic.htm">GetType</a> (inherited from <b>Object</b>)</td><td width="50%">
+        Gets the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTypeClassTopic.htm">Type</a> of the current instance.
+      </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="Infor.SST.AsyncMethods.AsyncOperation.Start.html">Start</a> (inherited from <b>AsyncOperation</b>)</td><td width="50%"> Launch the operation on a worker thread. This method will return immediately, and the operation will start asynchronously on a worker thread. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassToStringTopic.htm">ToString</a> (inherited from <b>Object</b>)</td><td width="50%">
+        Returns a <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a> that represents the current <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a>.
+      </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="Infor.SST.AsyncMethods.AsyncOperation.WaitUntilDone.html">WaitUntilDone</a> (inherited from <b>AsyncOperation</b>)</td><td width="50%"> Blocks until the operation has either run to completion, or has been successfully cancelled, or has failed with an internal exception. </td></tr></table>
+      </div>
+      <h4 class="dtH4">Protected Instance Methods</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="protmethod.gif"></img><a href="Infor.SST.AsyncMethods.AsyncOperation.AcknowledgeCancel.html">AcknowledgeCancel</a> (inherited from <b>AsyncOperation</b>)</td><td width="50%"> This is called by the operation when it wants to indicate that it saw the cancellation request and honoured it. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="protmethod.gif"></img><a href="Infor.SST.AsyncMethods.AsyncThread.DoWork.html">DoWork</a></td><td width="50%"> Overridden method where the developer would add code to perform the actual async call work. 
+            <example> This sample shows where to modify the DoWork method. <pre class="code" escaped="true">protected override void DoWork()
+{
+    // TODO: add a method to perform some work and then 
+    //         fire the OnWorkCompleted event
+    //         When a cancel occurs, we'd better acknowledge 
+    //         cancellation.
+    if (CancelRequested)
+    {
+        AcknowledgeCancel();
+    }
+}
+</pre>
+            </example>
+            
+            </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="protmethod.gif"></img><a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassFinalizeTopic.htm">Finalize</a> (inherited from <b>Object</b>)</td><td width="50%">
+        Allows an <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a> to attempt to free resources and perform other cleanup operations before the <b>Object</b> is reclaimed by garbage collection.
+      </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="protmethod.gif"></img><a href="Infor.SST.AsyncMethods.AsyncOperation.FireAsync.html">FireAsync</a> (inherited from <b>AsyncOperation</b>)</td><td width="50%"> Utility function for firing an event through the target. It uses C#'s variable length parameter list support to build the parameter list. This functions presumes that the caller holds the object lock. (This is because the event list is typically modified on the UI thread, but events are usually raised on the worker thread.) </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="protmethod.gif"></img><a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassMemberwiseCloneTopic.htm">MemberwiseClone</a> (inherited from <b>Object</b>)</td><td width="50%">
+        Creates a shallow copy of the current <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a>.
+      </td></tr></table>
+      </div>
+      <h4 class="dtH4">Private Instance Methods</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="privmethod.gif"></img><a href="Infor.SST.AsyncMethods.AsyncThread.OnWorkCompleted.html">OnWorkCompleted</a></td><td width="50%"> Event handler to fire event OnWorkCompleted. This provides notification back to the UI elements that launched the async call. </td></tr></table>
+      </div>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Infor.SST.AsyncMethods.AsyncThread.html">AsyncThread Class</a> | <a href="Infor.SST.AsyncMethods.html">Infor.SST.AsyncMethods Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="AsyncThread class, methods">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+        </p>
+        <p>Generated from assembly SST [1.0.2118.11998]</p>
+      </div>
+    </div>
+  </body>
+</html>

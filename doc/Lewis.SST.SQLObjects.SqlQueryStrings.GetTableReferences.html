@@ -1,0 +1,109 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>SqlQueryStrings.GetTableReferences Field</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">SQL Schema Tool Help</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">SqlQueryStrings.GetTableReferences Field
+					</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> const SQL statement </p>
+      <div class="syntax">public const <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> GetTableReferences = "SET @tablename = '{0}'
+SET @flags = 0
+ 
+   /* tablename: table whose references are being evaluated */
+   /* type     : '[actual | all][tables | keys | keycols]'; all candidates, or only those actually referenced */
+   /* direction: look for references from @tablename to 'primary' table(s), or to @tablename from 'foreign' table(s) */
+   /* reftable : limit scope to this table, if non-null */
+   /*** @flags added for DaVinci uses.  If the bit isn't set, use 6.5 ***/
+   /*** sp_MStablerefs '%s', null, 'both'                             ***/
+
+	/* @flags is for daVinci */
+	if (@flags is null)
+		select @flags = 0
+
+	select
+        N'PK_Table' = PKT.name,
+        N'FK_Table' = FKT.name,
+        N'Constraint' = object_name(r.constid),
+		--c.status,
+		cKeyCol1 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey1)),
+		cKeyCol2 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey2)),
+		cKeyCol3 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey3)),
+		cKeyCol4 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey4)),
+		cKeyCol5 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey5)),
+		cKeyCol6 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey6)),
+		cKeyCol7 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey7)),
+		cKeyCol8 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey8)),
+		cKeyCol9 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey9)),
+		cKeyCol10 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey10)),
+		cKeyCol11 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey11)),
+		cKeyCol12 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey12)),
+		cKeyCol13 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey13)),
+		cKeyCol14 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey14)),
+		cKeyCol15 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey15)),
+		cKeyCol16 = convert(nvarchar(132), col_name(r.fkeyid, r.fkey16)),
+		cRefCol1 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey1)),
+		cRefCol2 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey2)),	
+		cRefCol3 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey3)),
+		cRefCol4 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey4)),
+		cRefCol5 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey5)),
+		cRefCol6 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey6)),
+		cRefCol7 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey7)),
+		cRefCol8 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey8)),
+		cRefCol9 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey9)),
+		cRefCol10 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey10)),
+		cRefCol11 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey11)),
+		cRefCol12 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey12)),
+		cRefCol13 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey13)),
+		cRefCol14 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey14)),
+		cRefCol15 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey15)),
+		cRefCol16 = convert(nvarchar(132), col_name(r.rkeyid, r.rkey16)),
+		N'PK_Table_Owner' = user_name(PKT.uid),
+		N'FK_Table_Owner' = user_name(FKT.uid),
+        N'DeleteCascade' = OBJECTPROPERTY( r.constid, N'CnstIsDeleteCascade'),
+        N'UpdateCascade' = OBJECTPROPERTY( r.constid, N'CnstIsUpdateCascade')
+    from dbo.sysreferences r, dbo.sysconstraints c, dbo.sysobjects PKT, dbo.sysobjects FKT
+    where r.constid = c.constid and (@tablename is null or
+        (r.rkeyid = object_id(@tablename) or r.fkeyid = object_id(@tablename)))
+    and PKT.id = r.rkeyid and FKT.id = r.fkeyid
+";</div>
+      <p>
+      </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Lewis.SST.SQLObjects.SqlQueryStrings.html">SqlQueryStrings Class</a> | <a href="Lewis.SST.SQLObjects.html">Lewis.SST.SQLObjects Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="GetTableReferences field">
+        </param>
+        <param name="Keyword" value="GetTableReferences field, SqlQueryStrings class">
+        </param>
+        <param name="Keyword" value="SqlQueryStrings.GetTableReferences field">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+        </p>
+        <p>Generated from assembly SST [1.0.2793.35291]</p>
+      </div>
+    </div>
+  </body>
+</html>

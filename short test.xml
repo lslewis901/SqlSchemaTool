@@ -1,0 +1,332 @@
+<DataBase_Schema>DiffData<Database>
+		<Name>llewis_insite_diff_llewis_insite_bw_schema.sql</Name>
+		<Date>10/17/2005</Date>
+		<Time>5:51 PM</Time>
+	</Database>
+	<TABLE Action="Alter">
+		<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+		<TABLE_OWNER>dbo</TABLE_OWNER>
+		<TABLE_FILEGROUP>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<groupname>PRIMARY</groupname>
+		</TABLE_FILEGROUP>
+		<TABLE_REFERENCE/>
+		<TABLE_CONSTRAINTS/>
+		<TABLE_ORIG_CONSTRAINTS/>
+		<TABLE_ORIG_REFERENCE/>
+		<COLUMN>
+			<Action>Add</Action>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<Column_Name>ProdLine</Column_Name>
+			<Type>varchar</Type>
+			<Base_Type>varchar</Base_Type>
+			<Length>6</Length>
+			<Prec>6</Prec>
+			<Scale>0</Scale>
+			<Seed>0</Seed>
+			<Increment>0</Increment>
+			<isNullable>0</isNullable>
+			<isIdentity>0</isIdentity>
+			<isComputed>0</isComputed>
+			<Default_Name/>
+			<Rule_Name/>
+			<Default_Owner/>
+			<Default_Value>(' ')</Default_Value>
+			<Rule_Owner/>
+			<NotforRepl>0</NotforRepl>
+			<isRowGuidCol>0</isRowGuidCol>
+			<FullText>0</FullText>
+			<AnsiPad>1</AnsiPad>
+			<Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+			<Calc_Text/>
+		</COLUMN>
+		<COLUMN>
+			<Action>Alter</Action>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<Column_Name>ProdID</Column_Name>
+			<Type>char</Type>
+			<Base_Type>char</Base_Type>
+			<Length>40</Length>
+			<Prec>40</Prec>
+			<Scale>0</Scale>
+			<Seed>0</Seed>
+			<Increment>0</Increment>
+			<isNullable>0</isNullable>
+			<isIdentity>0</isIdentity>
+			<isComputed>0</isComputed>
+			<Default_Orig_Name>dbo.Blank</Default_Orig_Name>
+			<Default_Name/>
+			<Rule_Name/>
+			<Default_Owner/>
+			<Default_Value>(' ')</Default_Value>
+			<Default_Orig_Value>' '</Default_Orig_Value>
+			<Rule_Owner/>
+			<NotforRepl>0</NotforRepl>
+			<isRowGuidCol>0</isRowGuidCol>
+			<ORIG_RowGuidCol>0</ORIG_RowGuidCol>
+			<FullText>0</FullText>
+			<AnsiPad>1</AnsiPad>
+			<Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+			<Calc_Text/>
+		</COLUMN>
+		<COLUMN>
+			<Action>Alter</Action>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<Column_Name>WhseID</Column_Name>
+			<Type>char</Type>
+			<Base_Type>char</Base_Type>
+			<Length>4</Length>
+			<Prec>4</Prec>
+			<Scale>0</Scale>
+			<Seed>0</Seed>
+			<Increment>0</Increment>
+			<isNullable>0</isNullable>
+			<isIdentity>0</isIdentity>
+			<isComputed>0</isComputed>
+			<Default_Orig_Name>dbo.Blank</Default_Orig_Name>
+			<Default_Name/>
+			<Rule_Name/>
+			<Default_Owner/>
+			<Default_Value>(' ')</Default_Value>
+			<Default_Orig_Value>' '</Default_Orig_Value>
+			<Rule_Owner/>
+			<NotforRepl>0</NotforRepl>
+			<isRowGuidCol>0</isRowGuidCol>
+			<ORIG_RowGuidCol>0</ORIG_RowGuidCol>
+			<FullText>0</FullText>
+			<AnsiPad>1</AnsiPad>
+			<Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+			<Calc_Text/>
+		</COLUMN>
+		<DropAdd_Indexes Action="Drop">
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xLoadCorReptsInvDate</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Cono, Date, CustID, ProdCatId, ProdID, PriceType, InsideSlsRep, OutsideSlsRep, VendID</index_keys>
+		</DropAdd_Indexes>
+		<DropAdd_Indexes Action="Drop">
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_DtOutsls</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, OutsideSlsRep</index_keys>
+		</DropAdd_Indexes>
+		<DropAdd_Indexes Action="Drop">
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>PK_SalesByInvDate</index_name>
+			<index_description>nonclustered, unique, primary key located on PRIMARY</index_description>
+			<index_keys>Cono, Date, CustID, CustType, Territory, SIC, ProdCatId, ProdID, PriceType, WhseID, InsideSlsRep, OutsideSlsRep, VendID</index_keys>
+		</DropAdd_Indexes>
+		<DropAdd_Indexes Action="Drop">
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_DtInsls</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, InsideSlsRep</index_keys>
+		</DropAdd_Indexes>
+		<TABLE_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>PK_SalesByInvDate</index_name>
+			<index_description>nonclustered, unique, primary key located on PRIMARY</index_description>
+			<index_keys>Cono, Date, CustID, ShipToId, Territory, SIC, ProdCatId, ProdLine, ProdID, PriceType, WhseID, ActualInsideSlsRep, ActualOutsideSlsRep, VendID</index_keys>
+		</TABLE_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>PK_SalesByInvDate</index_name>
+			<index_description>nonclustered, unique, primary key located on PRIMARY</index_description>
+			<index_keys>Cono, Date, CustID, CustType, Territory, SIC, ProdCatId, ProdID, PriceType, WhseID, InsideSlsRep, OutsideSlsRep, VendID</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xak_SalesByInvDate_ConoDate_Clustered</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Cono, Date</index_keys>
+		</TABLE_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xLoadCorReptsInvDate</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Cono, Date, CustID, ProdCatId, ProdID, PriceType, InsideSlsRep, OutsideSlsRep, VendID</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_Date</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_DtCono</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, Cono</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_DtInsls</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, InsideSlsRep</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_DtOutsls</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, OutsideSlsRep</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_DtPriceType</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, PriceType</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_DtProdCat</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, ProdCatId</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_DtVend</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, VendID</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_DtWhse</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, WhseID</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_ORIG_INDEX>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<index_name>xSlsInvDt_ProdId</index_name>
+			<index_description>nonclustered located on PRIMARY</index_description>
+			<index_keys>Date, ProdID</index_keys>
+		</TABLE_ORIG_INDEX>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByInv__Cono__1B88F612</CONSTRAINT_NAME>
+			<COLUMN_NAME>Cono</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(0)</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__CustI__1C7D1A4B</CONSTRAINT_NAME>
+			<COLUMN_NAME>CustID</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__CustT__1D713E84</CONSTRAINT_NAME>
+			<COLUMN_NAME>CustType</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__CustN__1E6562BD</CONSTRAINT_NAME>
+			<COLUMN_NAME>CustName</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__Terri__1F5986F6</CONSTRAINT_NAME>
+			<COLUMN_NAME>Territory</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByInvD__SIC__204DAB2F</CONSTRAINT_NAME>
+			<COLUMN_NAME>SIC</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__ProdC__2141CF68</CONSTRAINT_NAME>
+			<COLUMN_NAME>ProdCatId</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__ProdL__2235F3A1</CONSTRAINT_NAME>
+			<COLUMN_NAME>ProdLine</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__ProdI__232A17DA</CONSTRAINT_NAME>
+			<COLUMN_NAME>ProdID</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__WhseI__241E3C13</CONSTRAINT_NAME>
+			<COLUMN_NAME>WhseID</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__Actua__2512604C</CONSTRAINT_NAME>
+			<COLUMN_NAME>ActualInsideSlsRep</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__Actua__26068485</CONSTRAINT_NAME>
+			<COLUMN_NAME>ActualOutsideSlsRep</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__Defau__26FAA8BE</CONSTRAINT_NAME>
+			<COLUMN_NAME>DefaultInsideSlsRep</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__Defau__27EECCF7</CONSTRAINT_NAME>
+			<COLUMN_NAME>DefaultOutsideSlsRep</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__VendI__28E2F130</CONSTRAINT_NAME>
+			<COLUMN_NAME>VendID</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(' ')</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+		<TABLE_CONSTRAINTS>
+			<TABLE_NAME>SalesByInvDate</TABLE_NAME>
+			<CONSTRAINT_OWNER>dbo</CONSTRAINT_OWNER>
+			<CONSTRAINT_NAME>DF__SalesByIn__LastU__1CBC4616</CONSTRAINT_NAME>
+			<COLUMN_NAME>LastUpdateDate</COLUMN_NAME>
+			<CONSTRAINT_CLAUSE>(getdate())</CONSTRAINT_CLAUSE>
+			<CONSTRAINT_TYPE>D </CONSTRAINT_TYPE>
+		</TABLE_CONSTRAINTS>
+	</TABLE>
+</DataBase_Schema>

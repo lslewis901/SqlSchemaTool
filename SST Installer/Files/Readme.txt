@@ -1,0 +1,276 @@
+REPORTED BUGS:
+
+TRACKING AT: http://lindseylewis.spaces.live.com/default.aspx, Use the guestbook,
+Or E-mail: support@lewissoftware.com
+
+
+	reported: awittig: 08/02/2007,
+	status: fixed. 10/15/2007.
+	issue: The process indicator goes away after one of the databases 
+		is done processing, even though the second is still in process.
+
+	reported: llewis: 10/15/2007,
+	status: fixed. 10/15/2007.
+	issue: Error caused by using the ] and ) symbols in the find dialog.
+
+	reported: llewis: 09/05/2007,
+	status: fixed. 10/15/2007.
+	issue: MAX column size for varchar which is reported as -1 in XML,
+		XSLT now translates -1 into the MAX length for any char type of columns.
+
+Fixed prior to 09/05/2007.
+
+	reported: llewis: 08/18/2007,
+	status: fixed.
+	issue: adding a server not already in the server tree, added it but
+	    did not attempt to establish a connection or make the server node
+	    accessable until exiting and re-entering the app.
+	
+	reported: awittig: 08/06/2007,
+	status: fixed.
+	issue: Not all data tables appear in table tree list in the 
+		SQL Server Explorer.
+
+	reported: awittig: 08/06/2007,
+	status: fixed.
+	issue: Selected data tables still selected but not shown after removing table tree 
+		list in the SQL Server Explorer.  Fixed by deselecting tables on hide of 
+		Table list. - this issue is two fold.  There is still an issue with the
+		collapse of the table tree list losing the selected icons.
+
+	reported: awittig: 08/06/2007,
+	status: fixed.
+	issue: after app processed a Compare and finished; Error: Unable to cast 
+		object of type 'Lewis.SST.Controls.TableTreeNode' to 
+		type 'Lewis.SST.Controls.DBTreeNode'.
+		
+	reported: awittig: 08/06/2007,
+	status: fixed.
+	issue: During close of app. System.NullReferenceException: Object reference 
+		not set to an instance of an object at 
+		Lewis.SST.Controls.Document.GetPersistString()
+		
+	reported: awittig: 08/06/2007,
+	status: Needs to be re-tested since additional coding error checks have been added.
+	issue: During opening of app. System.NullReferenceException for loading Settings or options.
+		
+	reported: llewis: 08/06/2007,
+	status: fixed.
+	issue: Run SQL on Server, dialog displayed user name and password as disabled fields,
+		using current selected Server connection settings for, so lets not display any 
+		user or pwd or security settings.
+	
+	reported: llewis: 08/06/2007,
+	status: fixed.
+	issue: Stack overflow error caused by recursive code at clearselected method in 
+		SQLServerExplorer object when comparing two data tables.
+	
+	reported: llewis: 08/06/2007,
+	status: fixed.
+	issue: when "saving as", the document would report an error after saving the 
+		file, about an illegal character (*) in the filename.
+	
+	reported: awittig: 08/02/2007, 
+	status: fixed.
+	issue: when clicking the report button and then cancel open file dialog 
+		leaves process indicator spinning.
+
+	reported: llewis: 08/02/2007, 
+	status: fixed.
+	issue: options dialog size is sized just to top window title bar on 
+		fresh install of application.
+
+
+NEW ENHANCEMENTS/CHANGES:
+
+	reported: llewis: 08/17/2007,
+	feature: enhanced html reports for Schema Diff, include color coding.
+		
+	reported: llewis: 08/07/2007,
+	feature: ability to generate SST batch file commands for processing schema
+		from the command line.
+		
+	reported: awittig: 08/07/2007,
+	feature: ability to generate XML Data from data tables
+		from the command line.  This also allows XML data queries from the 
+		XML Node Explorer, so the XPath string /*/Table/[Field1='somevalue'] 
+		will find the first node match in the XML data where there is a 
+		Field1 with a inner text value of 'somevalue'.
+		
+	reported: awittig: 08/07/2007,
+	feature: App will not populate server list, unless you refresh the servers 
+		through the 3 possible ways: button/menu item.  This allows a user 
+		to add only the SQL servers that he wants to see in the SQL explorer.
+		
+
+
+08/02/2007
+
+Environment Notes:
+
+	The application will a call to the local area network to discover any SQL servers when you select 
+	either refresh servers button, using the System.Data.Sql.SqlDataSourceEnumerator class.
+	
+	This will make your firewall on your local PC ask you to allow this unless your firewall has already 
+	established that port as open.
+
+
+
+08/19/2007
+
+Know Issues:
+	Data export as XML:
+	To optimize the resulting XML code, the WriteXml method drops column fields with null values. 
+	Dropping the null column fields doesn't affect the usability of the DataSet object—you can 
+	successfully rebuild the object from XML, and data-bound controls can easily manage null values. 
+	This feature can become a problem, however, if you send the DataSet object's XML output to a 
+	non-.NET platform. Other parsers, unaware that null values are omitted for brevity, might 
+	fail to parse the document. If you want to represent null values in the XML output, replace 
+	the null values (System.DBNull type) with other neutral values (for example, blank spaces).
+
+    Find/Replace does not reset the start position when moving the caret via mouse or keyboard.
+
+    Compare does not support views with indexes.
+
+    Very large XML files can cause application to reload slowly when the settings/general/reload 
+    files option is turned on.
+
+    A large number of Views can cause initial XML serialization to take up to 10 minutes to 
+    calculate all dependencies.
+    
+    There is no current data synchronization between tables.  By design, you cannot compare data 
+    and expect the output to be the same if the tables being compared have differing schema's.
+
+	Occasionally during heavy threaded activity, the application will get an non-recoverable MDA error
+	that is thrown by the CLR as an internal CLR error, when using the mouse to select or change tabs in
+	any open document window.
+	
+	The HTML report currently displays only the table columns that have altered or been added from the 
+	XML Difference snapshot.  (use the SQL output to see all the proposed changes to the database)
+	
+	Installer (Current) does not copy all DLLs into the commandline versions of the tools. 
+	Workaround: manually copy DLLs from GUI directory into commandline tool directories.  
+	
+	Installer (Current) does not make a shortcut for running the application on any Start menu, 
+	or on the desktop.  
+	Workaround:  locate application in the installed directory (typically Program Files\Sql Schema Tool)
+	and run the application bu dbl-clicking the exe file, or make a shortcut using Windows File Explorer
+	functionality.
+
+
+Weaknesses:
+
+	Reporting of Differences/Changes due to occur in the SQL script process.  The HTML diff report
+	does not automatically display after the run of a Schema compare.  The HTML report button is
+	the main button, but that may confuse people because of the dropdown menu for the standard report.
+	
+	Data Compare, can only process two tables, a source and a target, rather than the entire DB.
+	
+	Threading on single processor CPUs, still pegs the CPU usage, and makes things run pretty dang slow
+	during a schema compare on Large Databases.  I'll be looking for ways to enhance this performance. A schema
+	compare with a large number of views or large numbers of stored procedures, and with the text compare 
+	option turned on is a really slow process and could take 15-20 minutes on a laptop (my laptop, debug mode).
+	
+	No Assembly is signed with a strong key yet.
+	
+	Installer is just a plain wrapper at this point and needs to be redone using WIX.
+	
+	Commandline apps need more testing, but they seem to use less CPU cycles than that of the GUI interface,
+	even though the same methods are being called asynchronously both places.  Time of processing seems to be
+	about the same, regardless.  Last large DB process time was around Lapsed time = 00:10:31.4375000.
+	
+	No help file is installed currently.
+	
+	
+SQL Transformation Output from XML:
+
+    SQL Transformation output replaces UDDTs with standard SQL types where possible, 
+    to reduce issues for collation changes later on.
+
+
+Data Compare:
+
+    Currently only does one selected table from a source and one selected table from a destination.
+
+    Schema of both tables need to be the same for a data compare to work properly. 
+    Indexes can affect data order which the process is set to ignore, but could potentially 
+	affect the outcome.
+	
+	There has not been extensive testing of the data compare yet - it has only seen limited use.
+
+
+Logging:
+	
+	The application uses NLog to log errors, debug, warnings, and informational output, 
+	from the command line tool as well as the GUI tool.  This functionality can be changed
+	via the NLog.config file.
+	
+
+Settings Persistence:
+
+	If for some reason the application fails to launch because of, or you are not satisfied with perviously
+	persisted settings, delete the windows.config, dockPanel.config, and the options.config files and 
+	the program will use the initial default settings for startup.
+
+
+Commandline Tools:
+
+	There are two command line applications, one that does DTS package de/serialization and one
+	that does SQL schema de/serialization.
+
+
+Design Considerations:
+
+	This tool was started as a method for updating live databases with schema changes from the 
+	ongoing development	efforts of multiple developers.  As such it started life as a commandline tool
+	rather than using a GUI interface.
+	
+	The DTS Package Serializer tool was started as a method for delivery of DTS packages through some
+	automated and scripted MSI or Installshield type of installer where server logins, and names could 
+	be easily replaced in an XML file representation of the DTS package as opposed to using the DTS 
+	Package designer that is built into SQL Server to make changes after some intall.
+	
+	The primary considerations of design, are to generate the SQL schema script so as to prevent any
+	data loss on the target/destination SQL server, when the script is run. As such the scripting process
+	was designed to not drop any existing tables, or views (the views maybe should be changed) to avoid 
+	loosing any	data.  New tables will get the equivalent SQL for if exists then drop and create 
+	with-in the SQL script.
+	
+	Secondly, the generated script should be able to run in an automated build. This requires the 
+	script to be as error free as possible so as to avoid human intervention during its processing.
+	
+	The next design consideration, was to replace UDDT's with standard SQL datatypes during the output
+	of any SQL schema script, so as to make database compares easier, and to help avoid potential 
+	collation errors that can be caused by UDDTs during collation changes of a database.
+	
+	Another design consideration, was the all SQL scripts should be compatible with any SQL Server 2000
+	standard tools, such as SQL Query Analyzer.  As such, the scripts are generated with full SQL Server 
+	2000/2005 compatibility in mind.
+	
+	Data Compare was added after realizing that a developer will often need to compare two data tables
+	records, to see that the necessary data records are in place.
+	
+	The application was not designed to be an editor of SQL or XML.  As such, there may be editing 
+	weaknesses, but I'd prefer to concentrate on enhancing the application's strengths, unless an 
+	editor is just to unusable.
+	
+	Future enhancements will include most or all of the items listed in the TODO List.txt file.
+	
+
+General Comments:
+	
+	The application is not designed to be an open souce tool, and as such with any errors that occur -  
+	it would be nice to have a copy of the log file.  Just email the log (which appends), to me every 
+	so often.  
+	
+	If the tool is too unfriendly or to hard to use no one will want it.  Please let me know about 
+	UI design issues that are not neccessarily hard bugs, but maybe a usability issue.
+	
+	A few times I took the path of least resistance, just to get the application finished to this point.  
+	I do plan on going back over the code, performing unit tests, and looking for ways to crank 
+	up the performance.
+	
+	Any comments are appreciated.
+
+
+My email address is lindsey.lewis@msn.com

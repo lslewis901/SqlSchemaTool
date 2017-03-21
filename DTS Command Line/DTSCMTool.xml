@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DTSCL</name>
+    </assembly>
+    <members>
+        <member name="T:Lewis.SST.DTSCommandLine">
+            <summary>
+            DTS command line tool class.  Uses the DTS package class to serialize/deserialize DTS packages to/from SQL servers, to/from DTS structured storage files, 
+            or to/from serialized DTS XML documents.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.Main(System.String[])">
+            <summary>
+            The main entry point for the command line application.
+            </summary>
+            <param name="args">The command line arguments.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.ProcessCommandLine(System.String[],System.Reflection.Assembly)">
+            <summary>
+            Processes the command line arguments.
+            </summary>
+            <param name="args">The command line arguments.</param>
+            <param name="a">Assembly.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.InitializeDTSPackage(System.String,System.String,System.String)">
+            <summary>
+            Initializes the DTS package.
+            </summary>
+            <param name="name">The DTS package name.</param>
+            <param name="logfile">The DTS logfile name.</param>
+            <param name="description">The DTS package description.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.RemovePackageFromSQLServer(Lewis.SST.DTSPackageClass.DTSPackage2,System.String,System.String)">
+            <summary>
+            Removes the DTS package from SQL server.
+            </summary>
+            <param name="oPackage">The DTS package object.</param>
+            <param name="packGUID">The DTS package GUID.</param>
+            <param name="verGUID">The DTS version GUID.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.LoadPackageFromXMLDoc(Lewis.SST.DTSPackageClass.DTSPackage2,System.String,System.String)">
+            <summary>
+            Loads the DTS package from an XML doc into the DTS Package object class.
+            </summary>
+            <param name="oPackage">The DTS package object.</param>
+            <param name="fileName">Name of the XML doc file.</param>
+            <param name="encryptPass">The encrypt password.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.LoadPackageFromXMLDoc(Lewis.SST.DTSPackageClass.DTSPackage2,System.String,System.String,System.String)">
+            <summary>
+            Loads the DTS package from an XML doc into the DTS Package object class.
+            </summary>
+            <param name="oPackage">The DTS package object.</param>
+            <param name="DTSfileName">Name of the DTS file.</param>
+            <param name="XMLFileName">Name of the XML doc file.</param>
+            <param name="encryptPass">The encrypt password.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.LoadPackageFromDTSFile(Lewis.SST.DTSPackageClass.DTSPackage2,System.String,System.String,System.String,System.String)">
+            <summary>
+            Loads the DTS package from DTS structured storage file into the DTS Package object class.
+            </summary>
+            <param name="oPackage">The DTS package object.</param>
+            <param name="fileName">Name of the DTS structured storage file.</param>
+            <param name="encryptPass">The encrypt password.</param>
+            <param name="packageGUID">The DTS package GUID.</param>
+            <param name="versionGUID">The DTS version GUID.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.LoadPackageFromDTSFile(Lewis.SST.DTSPackageClass.DTSPackage2,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Loads the DTS package from DTS structured storage file into the DTS Package object class.
+            </summary>
+            <param name="oPackage">The DTS package object.</param>
+            <param name="DTSfileName">Name of the DTS file.</param>
+            <param name="XMLFileName">Name of the XML doc file.</param>
+            <param name="encryptPass">The DTS encrypt password.</param>
+            <param name="packageGUID">The DTS package GUID.</param>
+            <param name="versionGUID">The DTS version GUID.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.LoadPackageFromSQLServer(Lewis.SST.DTSPackageClass.DTSPackage2,System.String,System.String,System.String)">
+            <summary>
+            Loads the DTS package from SQL server into the DTS Package object class.
+            </summary>
+            <param name="oPackage">The DTS package object.</param>
+            <param name="encryptPass">The DTS encrypt password.</param>
+            <param name="packGUID">The DTS packackage GUID.</param>
+            <param name="verGUID">The DTS version GUID.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.SerializePackageAsXMLFile(Lewis.SST.DTSPackageClass.DTSPackage2,System.String)">
+            <summary>
+            Serializes the DTS package as an XML file.
+            </summary>
+            <param name="oPackage">The DTS package object.</param>
+            <param name="filename">The XML doc filename.</param>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.GetLocalMachineName">
+            <summary>
+            Gets the name of the local machine.
+            </summary>
+            <returns>Returns the name of the local machine.</returns>
+        </member>
+        <member name="M:Lewis.SST.DTSCommandLine.TestConnection(System.String,System.String,System.String)">
+            <summary>
+            Tests the SQL server connection.
+            </summary>
+            <param name="server">The server.</param>
+            <param name="userID">The user ID.</param>
+            <param name="password">The password.</param>
+            <returns>Returns true of connection ok or false if connection fails.</returns>
+        </member>
+        <member name="T:Lewis.SST.About">
+            <summary>
+            Class to display About/error message form.
+            </summary>
+        </member>
+        <member name="F:Lewis.SST.About.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.About.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lewis.SST.About"/> class.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.About.#ctor(System.Reflection.Assembly)">
+            <summary>
+            The about class constructor
+            </summary>
+            <param name="a">assembly</param>
+        </member>
+        <member name="M:Lewis.SST.About.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.About.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Lewis.SST.About.ShowText(System.String)">
+            <summary>
+            Shows the text method shows the current about information.
+            </summary>
+            <param name="text">The text.</param>
+        </member>
+        <member name="P:Lewis.SST.About.Message">
+            <summary>
+            Allows change of display message
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,68 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Lewis.SST</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">SQL Schema Tool Help</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">Lewis.SST Namespace</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p>
+        <a href="Lewis.SSTHierarchy.html">Namespace hierarchy</a>
+      </p>
+      <h3 class="dtH3">Classes</h3>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Class</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Lewis.SST.SQLSchemaTool.html">SQLSchemaTool</a>
+            </td>
+            <td width="50%">The SQL Schema Tool is a commandline executable application for generating XML schema documents from SQL server databases, comparing those databases or the XML schema documents, and finally generating a DiffGram XML document from the compare results. <p> The tool limitations currently are that it does not support "WITH NOCHECK" or extended properties. Additionally, the tool only supports adding calculated columns using CREATE TABLE or ALTER TABLE ADD 'column name' SQL statements. Also, calculated columns are added last in order, so that the columns they may be dependant on will already be in place. Column Default Constraints are dropped using sp_unbindefault and they are not re-added later in the diffgram SQL script script using sp_bindefault. </p>
+            <p> Instead the tool assigns the default value to the column using the ALTER TABLE ADD DEFAULT 'default value' FOR column_name method. Doing the diffgram schema this way does cause a DB updated with the diffgram to not compare exactly using the Redgate SQL Compare tool. However, the equivalent DB functionality is still there. </p>
+            <p> The order of columns will also be different between the source and destination DBs as the calculated columns are added to the table last. This by design so as to avoid dependency issues with other columns that the calculation may be dependant on. Speaking of dependant objects, especially stored procedures, these are output in the order indicated in the sysdepends table. If the sysdepends table gets out of sync with the database, then the stored procedures will likely also be out of sync. </p>
+            <p> This tool uses embedded XSLT 'style sheets' to transform the generated XML docs into the SQL script files. Also the code was changed to use XPathDocuments as suppliers of the XML to the XMLTransformation object. The performance increase is significant over using the XmlDataDocument object. </p>
+            <p> Check out the following URL for great tips on error handling in SQL: <a href="http://www.sommarskog.se/error-handling-II.html#whyerrorcheck">SQL Error Handling</a>
+            
+            </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h3 class="dtH3">Enumerations</h3>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Enumeration</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Lewis.SST.SQLSchemaTool._NodeType.html">SQLSchemaTool._NodeType</a>
+            </td>
+            <td width="50%"> Indicates the node type within the XML document </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

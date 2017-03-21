@@ -1,0 +1,270 @@
+Comments or Feature requests:
+Send to: sales@lewissoftware.com
+
+
+Add support for MySQL.
+
+Support all of the following database objects for compare:
+
+	Tables, done.
+	Views, done.
+	Stored Procedures, done.
+	User-Defined Functions, done.
+	Rules, done.
+	Defaults, done.
+	User-Defined Datatypes, done.
+	Users
+	Roles
+	Extended Database Properties
+	XML Schema Collections
+	Assemblies
+	DDL Triggers
+
+	Compare individual objects instead of entire DB.
+	Compare of DTS package snapshots.
+
+	
+Support all of the following Server objects for compare:
+
+	DTS packages (mostly done), 
+	Users
+	Roles
+
+
+Add the support for the following Compare options:
+
+	Ignore indexes
+	 Select this checkbox to ignore indexes when comparing databases. 
+	 
+	Ignore default constraints
+	 Select this checkbox to ignore default constraints when comparing databases. 
+	 
+	Ignore check constraints
+	 Select this checkbox to ignore check constraints when comparing databases. 
+	 
+	Ignore foreign keys
+	 Select this checkbox to ignore foreign keys when comparing databases. 
+	 
+	Ignore triggers
+	 Select this checkbox to ignore triggers when comparing databases. 
+	 
+	Ignore statistics
+	 Select this checkbox to ignore statistics when comparing databases. 
+	 
+	Ignore permissions
+	 Select this checkbox to ignore database permissions when comparing databases. 
+	 
+	Ignore extended properties
+	 Select this checkbox to ignore extended properties when comparing databases. 
+	 
+	Ignore SET ANSI_NULLS and SET QUOTED_ IDENTIFIER statements
+	 Select this checkbox to ignore any SET ANSI_NULLS and SET QUOTED_ IDENTIFIER statements when  comparing databases. 
+	 
+	Ignore constraint names
+	 Select this checkbox to ignore the names of constraints when comparing databases. 
+	 
+	Ignore table column order
+	 Select this checkbox to ignore the order of columns in a table when comparing databases. 
+	 
+	Ignore fill factor
+	 Select this checkbox to ignore the index fill factor when comparing databases. 
+	 
+	Ignore collation
+	 Select this checkbox to ignore collation when comparing databases. 
+	 
+	Ignore identity seed and increment
+	 Select this checkbox to ignore the number assigned to each row in the table when comparing databases. 
+	 
+	Ignore filegroup
+	 Select this checkbox to ignore database filegroups when comparing databases. 
+	 
+	Ignore case
+	 Select this checkbox to ignore any case changes when comparing databases. 
+ 
+
+Script Generation Options to consider:
+ 
+	Use WITH NO CHECK for constraint
+	 Select this checkbox to use WITH NO CHECK when adding a constraint.  
+	 
+	Truncate nvarchar/ binary/etc data
+	 Select this checkbox to truncate data of the selected type when formatting the script.  
+	 
+	Replace NOT NULL with NULL
+	 Select this checkbox to replace any NOT NULL column values with NULL values in the script.  
+	 
+	Drop/Create modified objects instead of Alter
+	 Select this checkbox to drop and then re-create objects in the script rather than altering them.  
+	 
+	Ignore invalid procedures, functions, views
+	 Select this checkbox to ignore any invalid procedures, functions, or views rather than creating or 
+	 modifying them in the database.  
+	 
+	Use transactions in script
+	 Select this checkbox to include transactions such as COMMIT and ROLLBACK in the synchronization script. 
+
+	Include descriptive headers
+	 Select this checkbox to include descriptive headers as comments in the script. This can help you quickly 
+	 locate a specific area in the script. 
+
+	Generate scripts for all dependent objects
+	 Select this checkbox to include any dependent objects as well as the selected objects in the script. 
+
+
+Save Options:
+
+	settings - done.
+	turn on/off restore of last opened docs. - done.
+	add custom xslt path/filename for custom user reports. Done.
+
+
+Commandline Processing:
+
+	Add BAT file generation for running the schema generation, compare, or creation process from a DOS(CMD) command window. Done.
+	
+
+Synchronization Actions:
+
+	Reviewing Object Conflicts
+	 If any conflicts exist that could generate an exception error during synchronization, the Object Conflicts window displays. 
+
+	Results:
+	Open script with SQL Editor - done.
+	 Select this option to edit and run the script using Query Analyzer or Management Studio. 
+	 
+	Run script immediately
+	 Select this option to run the script and synchronize the schemas immediately. - Done
+	 Caution: If you select this option, you should review the script for accuracy before continuing. 
+	 
+	Compare database after
+	 Select this checkbox to re-run the compare after synchronizing schemas. 
+	 
+	Completing the Synchronization
+	 View whether the script ran successfully or encountered errors from this window. 
+	 Server response messages also display on this window. 
+
+ 
+Reports:
+
+	Add a schema compare results report (xls, html, and/or pdf)? Mostly Done
+	Add ability to add custom xslt report to menu, and store xslt file path/name in options dialog
+	Add xslt for compare report based on (modified) diff file? need to add tables/views/sprocs/others 
+	that have not changed to existing report as well
+
+
+UI:
+
+	Add UI support for saving connection settings, done
+	reopen existing compare project - including xml or sql output files - done
+	Visual side-by-side object compare windows - future enhancement
+	ADD processing indicator - done
+	Update help text for SST when using bitmask for compare objects options
+
+	Options:
+		use XML resource file to define tree view and each options page (make it easier to add new options) - done
+		See above schema generation/compare options
+		Save UI settings option - done
+		Save SQL connections option - done
+
+
+Threading:
+
+	simultaneous serialization of DB objects for the 2 DBs in separate threads with dynamic status of process, Mostly completed.
+
+
+Editor Control:
+
+	reset line position during find/replace when moving caret	
+
+	
+Documentation:
+
+	write help, user, and marketing.
+
+
+License Agreement:
+
+	write legal doc for software usage and etc. Mosly done.
+
+
+Setup and Deploy:
+
+	obfuscate code?
+	Deployment wrapper using WIX. Done.
+	compile DLLs into one delieverable. Done.
+	
+	
+Marketing:
+
+	List special features such as distributing xml to convert/upgrade existing DBs to new schema in the 
+	field and make dynamic changes via install tools or during automated builds. Creating a new DB from 
+	an xml file representation of the schema and DB objects.
+	
+	Command line operations for batch processing during automated builds, or during an install process.
+	
+	Safe compare using dependency tree walker process to compare objects in order of their dependencies.
+	
+	Xml serialization of DTS packages useful for installing DTS package on existing DB using Installer to 
+	dynamically change server names, connection objects, etc. (as opposed to having to use enterprise 
+	manager's built-in DTS package editor.)
+	
+
+Requirements:
+
+	Minimum Software:
+		Sql Server 2000 DTS Designer Components (Only required for SQL2005) 
+			http://msdn2.microsoft.com/en-us/library/aa544774.aspx
+		SQL2000 SP4
+		.Net Framework 2.0
+	
+	Hardware:
+		??
+	
+Supports:
+
+	SQL2000
+	Most of SQL2005 objects
+
+
+New Features:
+  
+	Andy Wittig (Home) says (2:21 PM):
+	hey
+	Lindsey says (2:21 PM):
+	hi
+	Andy Wittig (Home) says (2:22 PM):
+	this new fangled tool... is it gonna help someone identify orphaned rows?
+	Andy Wittig (Home) says (2:22 PM):
+	seems like that's something that would be cool.  I don't see much out there.
+	Lindsey says (2:22 PM):
+	maybe, I can look into adding some stuff for that
+	Lindsey says (2:23 PM):
+	but you know, its more of a query for that data model, unless one can define some generic rules about orphans, like FKs with null values allowed on the child?
+	Lindsey says (2:24 PM):
+	I'll take a look at it
+	Andy Wittig (Home) says (2:24 PM):
+	right... you'd have to assume that the FK's were built in.
+	Lindsey says (2:24 PM):
+	we run into that here to
+	Lindsey says (2:24 PM):
+	also
+	Lindsey says (2:25 PM):
+	I could maybe have the tool examine the schema and return a query script to pull rows that meet that condition
+	Andy Wittig (Home) says (2:25 PM):
+	outer joins would be the trick there, eh?
+	Lindsey says (2:25 PM):
+	yeah
+	Andy Wittig (Home) says (2:26 PM):
+	maybe the tool would give you a starting point and then the user could go table by table and tweak the rules... because we all know not all DB's have great FK relationships and are normalized either.
+	Lindsey says (2:26 PM):
+	yeah, thats what I was thinking
+	Lindsey says (2:28 PM):
+	thanks for the suggestion
+
+
+	SELECT *
+	FROM
+		ChildTable as c
+		LEFT JOIN ParentTable as p ON(c.id = p.id)
+	WHERE
+		p.id IS NULL

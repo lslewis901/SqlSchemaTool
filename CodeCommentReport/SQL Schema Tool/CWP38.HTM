@@ -1,0 +1,515 @@
+<!-- saved from url=(0007)http:// -->
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Infor.SST.CommandLine</TITLE>
+<LINK REL=STYLESHEET HREF="../CommentReport.css" TYPE="text/css">
+</HEAD>
+<BODY topmargin=0 rightmargin=0 leftmargin=0 style="background-image: url(../titletile.jpg); background-repeat:repeat-x; background-position: 0 0;" >
+<DIV CLASS="PageHeading">Infor.SST.CommandLine Class</DIV>
+<DIV CLASS="Description">
+
+Commandline tool to compare a source against a destination DB, create XML output, 
+Translate the XML output into a SQL script and perform an upgrade of the destination 
+using a SQL script.
+&lt;code&gt;
+The following are the parameters used for this tool:
+
+/? or /Help for this help message
+
+PARAMETERS: (SQL Connections or Files to use)
+=============================================================================
+/Src_Server=[Source sql server]
+/Src_Database=[Source sql catalog or database] OR 
+/Src_Catalog=[Source sql catalog or database]
+/Src_Trusted - use trusted connection, user and pwd not required
+/Src_User=[Source sql server user login] OR 
+/Src_UID=[Source sql server user login]
+/Src_Password=[Source sql server user password] OR 
+/Src_PWD=[Source sql server user password]
+/Src_File=[output filename for source SQL server schema create script]
+/Src_Schema=[filename for existing source SQL server schema xml file]
+
+When connecting to a SQL server:
+When wanting to just get the SQL create schema XML/SQL file(s)
+for a single SQL DB, only use the Src_?????? parameters or the
+/CreateXMLFile parameter. 
+
+Only use the Dest_?????? parameters when doing a compare.
+
+/Dest_Server=[Destination sql server]
+/Dest_Database=[Destination sql catalog or database] OR 
+/Dest_Catalog=[Destination sql catalog or database]
+/Dest_Trusted - use trusted connection, user and pwd not required
+/Dest_User=[Destination sql server user login] OR 
+/Dest_UID=[Destination sql server user login]
+/Dest_Password=[Destination sql server user password] OR 
+/Dest_PWD=[Destination sql server user password]
+/Dest_File=[output filename for destination SQL server schema create script]
+/Dest_Schema=[filename for existing destination SQL server schema xml file]
+
+When providing just a single schema or diff XML file,
+Use the following parameters:
+
+/DiffXMLFile=[XML file name] - used by itself, this will apply the SQL diff
+transform against specified XML file.  Turns on the transform flag.
+Autogenerates SQL file name from XML input file name if none is
+provided via the next parameter '/DiffSQLFile'.
+
+/DiffSQLFile=[SQL file name] - used with the '/DiffXMLFile' paramter, this 
+will assign the SQL file name used for the transformation output.
+
+/CreateXMLFile=[XML file name] - used by itself, this will apply the SQL
+Create transform against specified XML file. Turns on the transform 
+flag.  	Autogenerates SQL file name from XML input file name if none
+is provided via the next parameter '/CreateSQLFile'.
+
+/CreateSQLFile=[SQL file name] - used with the '/CreateXMLFile' paramter, this 
+will assign the SQL file name used for the transformation output.
+
+OPTIONS: (changes operations of compare or output)
+=============================================================================
+/CompareSprocText - add this option to command line to compare source and
+dest stored procedure text line by line. Otherwise if both source and
+dest sprocs exists, the source sproc is always forced to 'alter
+procedure'.
+
+/Transform - add this option to command line to perform translation of the
+XML file into a SQL file for creating or updating the SQL Destination
+DB. Requires some combination of Source and Dest SQL connections
+and/or XML Schema files.
+&lt;/code&gt;
+<P>
+
+</DIV>
+<IMG src="../GradLeft.jpg" width=7 height=378 alt="" border="0" style="position:absolute; left:10; top:18;z-Index:2">
+<IMG src="../GradTop.jpg" width=352 height=7 alt="" border="0" align="top" style="position:absolute; left:10; top:18; z-index:1">
+<DIV CLASS="Remarks">
+<SPAN CLASS="RemarkHdrX">Access: </SPAN>Project</DIV>
+<DIV CLASS="Remarks">
+<SPAN CLASS="RemarkHdrX">Base Classes: </SPAN>Object</DIV>
+<TABLE CLASS="InfoTable" cellpadding=0 cellspacing=0>
+<TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD valign=top align=left width=9 bgcolor="#cccc66"><IMG SRC="../graycorner.jpg" align=top></TD>
+<TD CLASS="TableLightLabel" WIDTH=206>Members</TD>
+<TD CLASS="TableLightLabel" >Description</TD>
+<TD width=20>&nbsp;</TD>
+</TR>
+<TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP39.HTM" TARGET="CNTFRAME">nsmgr_Source</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP40.HTM" TARGET="CNTFRAME">nsmgr_Dest</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP41.HTM" TARGET="CNTFRAME">_src_server</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP42.HTM" TARGET="CNTFRAME">_src_user</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP43.HTM" TARGET="CNTFRAME">_src_db</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP44.HTM" TARGET="CNTFRAME">_src_password</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP45.HTM" TARGET="CNTFRAME">_src_trusted</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP46.HTM" TARGET="CNTFRAME">_src_file</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP47.HTM" TARGET="CNTFRAME">_src_schema</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP48.HTM" TARGET="CNTFRAME">_dest_server</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP49.HTM" TARGET="CNTFRAME">_dest_user</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP50.HTM" TARGET="CNTFRAME">_dest_db</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP51.HTM" TARGET="CNTFRAME">_dest_password</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP52.HTM" TARGET="CNTFRAME">_dest_trusted</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP53.HTM" TARGET="CNTFRAME">_dest_file</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP54.HTM" TARGET="CNTFRAME">_dest_schema</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP55.HTM" TARGET="CNTFRAME">_diffXMLFile</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP56.HTM" TARGET="CNTFRAME">_createXMLFile</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP57.HTM" TARGET="CNTFRAME">_diffName</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP58.HTM" TARGET="CNTFRAME">_createName</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP59.HTM" TARGET="CNTFRAME">_CompareSprocs</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP60.HTM" TARGET="CNTFRAME">_Translate</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP61.HTM" TARGET="CNTFRAME">_NodeType</A></TD>
+<TD CLASS="TableLightDesc">
+Indicates the node type within the XML document
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP70.HTM" TARGET="CNTFRAME">SPROCPATH</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "/DataBase_Schema/SPROC" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP71.HTM" TARGET="CNTFRAME">SPROCTEXT</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "SPROC_TEXT[SPROC_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP72.HTM" TARGET="CNTFRAME">SPROCDEP</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "SPROC_DEPENDS[SPROC_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP73.HTM" TARGET="CNTFRAME">FUNCPATH</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "/DataBase_Schema/FUNC" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP74.HTM" TARGET="CNTFRAME">FUNCTEXT</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "FUNC_TEXT[FUNC_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP75.HTM" TARGET="CNTFRAME">FUNCDEP</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "FUNC_DEPENDS[FUNC_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP76.HTM" TARGET="CNTFRAME">VIEWPATH</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "/DataBase_Schema/VIEW" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP77.HTM" TARGET="CNTFRAME">VIEWTEXT</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "CREATE_TEXT[VIEW_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP78.HTM" TARGET="CNTFRAME">VIEWDEP</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "CREATE_TEXT[VIEW_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP79.HTM" TARGET="CNTFRAME">TRIGGERPATH</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "VIEW_DEPENDS[VIEW_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP80.HTM" TARGET="CNTFRAME">TRIGGERTEXT</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "/DataBase_Schema/TRIGGER" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP81.HTM" TARGET="CNTFRAME">DEFAULTPATH</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "TRIGGER_TEXT[TRIGGER_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP82.HTM" TARGET="CNTFRAME">DEFAULTTEXT</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "/DataBase_Schema/DEFAULT" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP83.HTM" TARGET="CNTFRAME">RULEPATH</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "DEFAULT_TEXT[DEFAULT_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP84.HTM" TARGET="CNTFRAME">RULETEXT</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "/DataBase_Schema/RULE" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP85.HTM" TARGET="CNTFRAME">UDDTPATH</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "RULE_TEXT[RULE_NAME='" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP86.HTM" TARGET="CNTFRAME">UDDTTEXT</A></TD>
+<TD CLASS="TableLightDesc">
+const value of "/DataBase_Schema/UDDT" used in XPATH queries.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP87.HTM" TARGET="CNTFRAME">_help</A></TD>
+<TD CLASS="TableLightDesc">
+const value for the help text that is displayed when the /? parameter is used. 
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP88.HTM" TARGET="CNTFRAME">Main</A></TD>
+<TD CLASS="TableLightDesc">
+The main entry point for the application.
+Handles processing of the command line args.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP89.HTM" TARGET="CNTFRAME">SerializeDB</A></TD>
+<TD CLASS="TableLightDesc">
+Converts sql db objects of a connected SQL server database into an XML schema file.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP90.HTM" TARGET="CNTFRAME">CompareSchema</A></TD>
+<TD CLASS="TableLightDesc">
+Compares and outputs a SQL diffgram schema, both as XML and SQL script files.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP91.HTM" TARGET="CNTFRAME">CompareTables</A></TD>
+<TD CLASS="TableLightDesc">
+Compares SQL table schemas from two distinct XML schema files.  These files are generated by the SerializeDB method.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP92.HTM" TARGET="CNTFRAME">CompareTableObjs</A></TD>
+<TD CLASS="TableLightDesc">
+Compares table indexes, table constraints, and table FK/PK references from two distinct XML schema files. These files are generated by the SerializeDB method.  This method is called by the CompareTables method.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP93.HTM" TARGET="CNTFRAME">CompareObjects</A></TD>
+<TD CLASS="TableLightDesc">
+Compares database objects (except tables and columns) from two distinct XML schema files. These files are generated by the SerializeDB method.  This method is called from the CompareSchema method.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP94.HTM" TARGET="CNTFRAME">CompareColumns</A></TD>
+<TD CLASS="TableLightDesc">
+Compares table columns from two distinct XML schema files. These files are generated by the SerializeDB method.  This method is called from the CompareTables method.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP95.HTM" TARGET="CNTFRAME">RecurseDependencies</A></TD>
+<TD CLASS="TableLightDesc">
+Recursive procedure to examine and sort a SortedList of database objects with dependencies against a SortedList of dependencies to determine the proper dependency order.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP96.HTM" TARGET="CNTFRAME">SortDependencies</A></TD>
+<TD CLASS="TableLightDesc">
+Sorts the view, function, and stored procedure dependencies for the SQL schema read from a SQL server and database.  This method calls the RecurseDependencies method.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP97.HTM" TARGET="CNTFRAME">FindNode</A></TD>
+<TD CLASS="TableLightDesc">
+Finds any XMLnode that contains the text in the parameter findString
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP98.HTM" TARGET="CNTFRAME">FindSproc</A></TD>
+<TD CLASS="TableLightDesc">
+Recursive method used to find stored procedure child nodes within an XML parent node
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP99.HTM" TARGET="CNTFRAME">SQLTransform</A></TD>
+<TD CLASS="TableLightDesc">
+Apply xlst transformations against an XML file.
+Used to transform either the create XML schema file
+or the Diffgram XML schema file into a SQL script file.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR></TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,111 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>SqlQueryStrings.GetColumns Field</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">SQL Schema Tool Help</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">SqlQueryStrings.GetColumns Field
+					</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> const SQL statement </p>
+      <div class="syntax">public const <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> GetColumns = "
+DECLARE  @tablename nvarchar(517), @flags int, @obj_id int
+
+SET @tablename = '{0}'
+SET @flags = 0
+
+SELECT @obj_id = object_id(@tablename)
+	
+SET NOCOUNT ON
+
+SELECT 
+	Column_Name = c.name, 
+	--Column_ID = c.colid, 
+	Type = st.name,
+	Base_Type = bt.name,
+    Length = case when bt.name in (N'nchar', N'nvarchar') then c.length/2 else c.length end,
+	Prec = ISNULL(ColumnProperty(@obj_id, c.name, N'Precision'), 0),
+	Scale = ISNULL(ColumnProperty(@obj_id, c.name, N'Scale'), 0),
+	-- Identity seed and increment
+	Seed = case when (ColumnProperty(@obj_id, c.name, N'IsIdentity') &lt;&gt; 0) then CONVERT(nvarchar(40), ident_seed(@tablename)) else 0 end,
+	Increment = case when (ColumnProperty(@obj_id, c.name, N'IsIdentity') &lt;&gt; 0) then CONVERT(nvarchar(40), ident_incr(@tablename)) else 0 end,
+	-- Nullable
+	isNullable = ISNULL(ColumnProperty(@obj_id, c.name, N'AllowsNull'), 0),
+	-- Identity
+	isIdentity = case when (@flags &amp; 0x40000000 = 0) then ISNULL(ColumnProperty(@obj_id, c.name, N'IsIdentity'), 0) else 0 end,
+    isComputed = ISNULL(c.iscomputed, 0),
+	isRowGuidCol = ISNULL(ColumnProperty(@obj_id, c.name, N'IsRowGuidCol'), 0),
+	Default_Constraint = case when (c.cdefault = 0) then '' when (OBJECTPROPERTY(c.cdefault, N'IsDefaultCnst') &lt;&gt; 0) then user_name(d.uid) + N'.' + d.name else '' end,
+	-- Non-DRI Default (make sure it's not a DRI constraint).
+	Default_Name = case when (c.cdefault = 0) then '' when (OBJECTPROPERTY(c.cdefault, N'IsDefaultCnst') &lt;&gt; 0) then '' else user_name(d.uid) + N'.' + d.name end,
+	-- Non-DRI Rule
+	Rule_Name = case when (c.domain = 0) then '' else r.name end,
+	-- Physical base datatype
+	-- Non-DRI Default owner and name
+	Default_Owner = case when (c.cdefault = 0) then '' when (OBJECTPROPERTY(c.cdefault, N'IsDefaultCnst') &lt;&gt; 0) then '' else user_name(d.uid) end,
+	Default_Value = case when t.text is null then '' else replace(replace(case when (CHARINDEX('AS ', t.text)=0) then RTRIM(t.text) else RTRIM(SUBSTRING( t.text, CHARINDEX('AS ', t.text) + 3, LEN(t.text) - (CHARINDEX('AS ', t.text) + 3))) end, char(13), ''), char(10), '') end,
+	-- Non-DRI Rule owner and name
+	Rule_Owner = case when (c.domain = 0) then '' else user_name(r.uid) end,
+	-- Not For Replication
+	NotforRepl = ISNULL(ColumnProperty(@obj_id, c.name, N'IsIdNotForRepl'), 0),
+    FullText = ISNULL(ColumnProperty(@obj_id, c.name, N'IsFulltextIndexed'), 0),
+    AnsiPad = ISNULL(ColumnProperty(@obj_id, c.name, N'UsesAnsiTrim'), 0),
+    -- column level collation
+    Collation = ISNULL(c.collation, ''),
+	Calc_Text = ISNULL(com.text, '')
+
+FROM dbo.syscolumns c
+	LEFT OUTER JOIN syscomments as com ON c.id = com.id and c.colid = com.number
+	-- NonDRI Default and Rule filters
+	LEFT OUTER JOIN dbo.sysobjects d ON c.cdefault = d.id
+	LEFT OUTER JOIN dbo.sysobjects r ON c.domain = r.id 
+	-- Fully derived data type name
+	JOIN dbo.systypes st ON st.xusertype = c.xusertype
+	-- Physical base data type name
+	JOIN dbo.systypes bt ON bt.xusertype = c.xtype
+	-- DRIDefault text, if it's only one row.
+	LEFT OUTER JOIN dbo.syscomments t ON c.cdefault = t.id AND t.colid = 1
+		AND NOT EXISTS (SELECT * FROM dbo.syscomments WHERE id = c.cdefault AND colid = 2)
+
+WHERE c.id = @obj_id
+ORDER BY c.colid
+";</div>
+      <p>
+      </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Lewis.SST.SQLObjects.SqlQueryStrings.html">SqlQueryStrings Class</a> | <a href="Lewis.SST.SQLObjects.html">Lewis.SST.SQLObjects Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="GetColumns field">
+        </param>
+        <param name="Keyword" value="GetColumns field, SqlQueryStrings class">
+        </param>
+        <param name="Keyword" value="SqlQueryStrings.GetColumns field">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+        </p>
+        <p>Generated from assembly SST [1.0.2793.35291]</p>
+      </div>
+    </div>
+  </body>
+</html>

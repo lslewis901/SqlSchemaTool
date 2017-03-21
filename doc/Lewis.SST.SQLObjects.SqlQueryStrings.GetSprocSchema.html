@@ -1,0 +1,78 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>SqlQueryStrings.GetSprocSchema Field</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">SQL Schema Tool Help</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">SqlQueryStrings.GetSprocSchema Field
+					</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> const SQL statement </p>
+      <div class="syntax">public const <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> GetSprocSchema = "USE [{0}] 
+EXEC sp_helptext '{1}'
+
+-- get all the dependency objects
+select
+	'depname' = ISNULL(o1.name, ''),
+	--o1.id,
+	owner = ISNULL(s6.name, ''),
+	type = ISNULL(substring(v2.name, 5, 16), ''),
+	updated = ISNULL(substring(u4.name, 1, 7), ''),
+	selected = ISNULL(substring(w5.name, 1, 8), ''),
+	'column' = ISNULL(col_name(d3.depid, d3.depnumber), '')
+from sysobjects		o1
+	,master.dbo.spt_values	v2
+	,sysdepends		d3
+	,master.dbo.spt_values	u4
+	,master.dbo.spt_values	w5 --11667
+	,sysusers		s6
+where	 o1.id = d3.depid
+	and	 o1.xtype = substring(v2.name,1,2) collate database_default and v2.type = 'O9T'
+	and	 u4.type = 'B' and u4.number = d3.resultobj
+	and	 w5.type = 'B' and w5.number = d3.readobj|d3.selall
+	and	 d3.id = object_id('[{1}]')
+	and	 o1.uid = s6.uid
+	and deptype &lt; 2 
+	and substring(v2.name, 5, 16) &lt;&gt; 'user table'
+	and substring(v2.name, 5, 16) &lt;&gt; 'system table'
+order by depname
+";</div>
+      <p>
+      </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Lewis.SST.SQLObjects.SqlQueryStrings.html">SqlQueryStrings Class</a> | <a href="Lewis.SST.SQLObjects.html">Lewis.SST.SQLObjects Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="GetSprocSchema field">
+        </param>
+        <param name="Keyword" value="GetSprocSchema field, SqlQueryStrings class">
+        </param>
+        <param name="Keyword" value="SqlQueryStrings.GetSprocSchema field">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+        </p>
+        <p>Generated from assembly SST [1.0.2793.35291]</p>
+      </div>
+    </div>
+  </body>
+</html>

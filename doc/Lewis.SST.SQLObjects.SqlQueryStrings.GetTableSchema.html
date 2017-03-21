@@ -1,0 +1,98 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>SqlQueryStrings.GetTableSchema Field</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">SQL Schema Tool Help</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">SqlQueryStrings.GetTableSchema Field
+					</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> const SQL statement </p>
+      <div class="syntax">public const <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> GetTableSchema = " -- could potentially use EXEC sp_columns_rowset 'customer' 
+USE [{0}] 
+
+SELECT 
+	Table_Name = o.name, 
+	User_Name = user_name(o.uid),
+	N'SystemObj' = (case when (OBJECTPROPERTY(o.id, N'IsMSShipped')=1) then 1 else OBJECTPROPERTY(o.id, N'IsSystemTable') end),        
+	o.category, 
+	TableHasActiveFulltextIndex = ObjectProperty(o.id, N'TableHasActiveFulltextIndex'), 
+	TableFulltextCatalogId = ObjectProperty(o.id, N'TableFulltextCatalogId'), 
+	N'FakeTable' = (case when (OBJECTPROPERTY(o.id, N'tableisfake')=1) then 1 else 0 end),        
+	IsQuotedIdentOn = (case when (OBJECTPROPERTY(o.id, N'IsQuotedIdentOn')=1) then 1 else 0 end), 
+	IsAnsiNullsOn = (case when (OBJECTPROPERTY(o.id, N'IsAnsiNullsOn')=1) then 1 else 0 end)
+FROM dbo.sysobjects o, dbo.sysindexes i 
+WHERE OBJECTPROPERTY(o.id, N'IsTable') = 1 and i.id = o.id and i.indid &lt; 2 and o.name Like N'{1}'   
+ORDER BY Table_Name, User_Name
+
+SET QUOTED_IDENTIFIER OFF
+{2}
+SET QUOTED_IDENTIFIER ON
+
+{4}
+
+-- EXEC sp_MStablerefs N'[{1}]', N'actualkeycols', N'both'
+SET QUOTED_IDENTIFIER OFF
+{5}
+SET QUOTED_IDENTIFIER ON
+
+SET QUOTED_IDENTIFIER OFF
+{3}
+SET QUOTED_IDENTIFIER ON
+
+
+SELECT
+	--db_name()			as CONSTRAINT_CATALOG,
+	user_name(a.uid)  	as CONSTRAINT_OWNER,
+	a.name				as CONSTRAINT_NAME,
+	isnull(d.name, '')	AS COLUMN_NAME,
+	com.text			as CONSTRAINT_CLAUSE,
+	--object_name(a.parent_obj) AS PARENT_NAME, 
+	a.xtype				AS CONSTRAINT_TYPE
+FROM sysobjects AS a
+INNER JOIN syscomments AS com ON com.id = a.id
+LEFT OUTER JOIN dbo.syscolumns d on a.id = d.cdefault
+WHERE
+	permissions(a.parent_obj) != 0
+	and a.xtype IN ('C','D')
+	and object_name(a.parent_obj) = '{1}'
+";</div>
+      <p>
+      </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Lewis.SST.SQLObjects.SqlQueryStrings.html">SqlQueryStrings Class</a> | <a href="Lewis.SST.SQLObjects.html">Lewis.SST.SQLObjects Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="GetTableSchema field">
+        </param>
+        <param name="Keyword" value="GetTableSchema field, SqlQueryStrings class">
+        </param>
+        <param name="Keyword" value="SqlQueryStrings.GetTableSchema field">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+        </p>
+        <p>Generated from assembly SST [1.0.2793.35291]</p>
+      </div>
+    </div>
+  </body>
+</html>

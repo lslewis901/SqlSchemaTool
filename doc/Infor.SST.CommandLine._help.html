@@ -1,0 +1,120 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>CommandLine._help Field</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">SQL Schema Tool Help</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">CommandLine._help Field
+					</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> const value for the help text that is displayed when the /? parameter is used. </p>
+      <div class="syntax">private const <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> _help = "SST Version: {0}
+
+/? or /Help for this help message
+
+PARAMETERS: (SQL Connections or Files to use)
+=============================================================================
+/Src_Server=[Source sql server]
+/Src_Database=[Source sql catalog or database] OR 
+/Src_Catalog=[Source sql catalog or database]
+/Src_Trusted - use trusted connection, user and pwd not required
+/Src_User=[Source sql server user login] OR 
+/Src_UID=[Source sql server user login]
+/Src_Password=[Source sql server user password] OR 
+/Src_PWD=[Source sql server user password]
+/Src_File=[output filename for source SQL server schema create script]
+/Src_Schema=[filename for existing source SQL server schema xml file]
+
+When connecting to a SQL server:
+	When wanting to just get the SQL create schema XML/SQL file(s)
+	for a single SQL DB, only use the Src_?????? parameters or the
+	/CreateXMLFile parameter. 
+
+	Only use the Dest_?????? parameters when doing a compare.
+
+/Dest_Server=[Destination sql server]
+/Dest_Database=[Destination sql catalog or database] OR 
+/Dest_Catalog=[Destination sql catalog or database]
+/Dest_Trusted - use trusted connection, user and pwd not required
+/Dest_User=[Destination sql server user login] OR 
+/Dest_UID=[Destination sql server user login]
+/Dest_Password=[Destination sql server user password] OR 
+/Dest_PWD=[Destination sql server user password]
+/Dest_File=[output filename for destination SQL server schema create script]
+/Dest_Schema=[filename for existing destination SQL server schema xml file]
+
+When providing just a single schema or diff XML file,
+	Use the following parameters:
+
+/DiffXMLFile=[XML file name] - used by itself, this will apply the SQL diff
+	transform against specified XML file.  Turns on the transform flag.
+	Autogenerates SQL file name from XML input file name if none is
+	provided via the next parameter '/DiffSQLFile'.
+
+/DiffSQLFile=[SQL file name] - used with the '/DiffXMLFile' paramter, this 
+	will assign the SQL file name used for the transformation output.
+
+/CreateXMLFile=[XML file name] - used by itself, this will apply the SQL
+	Create transform against specified XML file. Turns on the transform 
+	flag.  	Autogenerates SQL file name from XML input file name if none
+	is provided via the next parameter '/CreateSQLFile'.
+
+/CreateSQLFile=[SQL file name] - used with the '/CreateXMLFile' paramter, this 
+	will assign the SQL file name used for the transformation output.
+
+OPTIONS: (changes operations of compare or output)
+=============================================================================
+/CompareSprocText - add this option to command line to compare source and
+	dest stored procedure text line by line. Otherwise if both source and
+	dest sprocs exists, the source sproc is always forced to 'alter
+	procedure'.
+
+/Transform - add this option to command line to perform translation of the
+	XML file into a SQL file for creating or updating the SQL Destination
+	DB. Requires some combination of Source and Dest SQL connections
+	and/or XML Schema files.
+
+/Primary - add this option for force all tables to use the Primary 
+	filegroup for CREATE TABLE or ALTER TABLE when serializing the schema.
+	This option will also cause the compare to ignore FileGroups, since
+	they all will be set to PRIMARY.
+";</div>
+      <p>
+      </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Infor.SST.CommandLine.html">CommandLine Class</a> | <a href="Infor.SST.html">Infor.SST Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="_help field">
+        </param>
+        <param name="Keyword" value="_help field, CommandLine class">
+        </param>
+        <param name="Keyword" value="CommandLine._help field">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+        </p>
+        <p>Generated from assembly SST [1.0.2118.11998]</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+<SyntaxModes version="1.0">
+	<Mode file       = "SQL.xshd"
+	      name       = "SQL"
+	      extensions = ".sql"/>
+  <Mode file       = "BAT.xshd"
+	      name       = "BAT"
+	      extensions = ".bat"/>
+</SyntaxModes>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Lewis.SST.DTSPackageClass.DTSPackage2">
+    <Position X="1.5" Y="0.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Lewis.SST.DTSPackageClass.DTSPackage2.ConnectionType">
+        <TypeIdentifier>
+          <NewMemberFileName>DTSPackage.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Lewis.SST.DTSPackageClass.DTSPackage2.authTypeFlags">
+        <TypeIdentifier>
+          <NewMemberFileName>DTSPackage.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>IAAIoKoAAaAAiCECAAAABASgBAEAHkABQAADAQAAAAs=</HashCode>
+      <FileName>DTSPackage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lewis.SST.DTSPackageClass.DTSColumn">
+    <Position X="4" Y="0.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Lewis.SST.DTSPackageClass.DTSColumn.colType">
+        <TypeIdentifier>
+          <NewMemberFileName>DTSColumns.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQAABAoAAAIAgIAAApQAQAUIAgAAAAAAAQQAAAACEgA=</HashCode>
+      <FileName>DTSColumns.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Lewis.SST.DTSPackageClass.DTSColumns">
+    <Position X="6.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEIEAEAAAAAAAAAACAEABAAAAAAAAAAAAAQAAAAQAAA=</HashCode>
+      <FileName>DTSColumns.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

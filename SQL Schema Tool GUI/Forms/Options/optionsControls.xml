@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<options>
+	<settings name="Settings">
+		<panel name="General">
+			<controls>
+        <control name="ReOpenLast" type="CheckBox" label="On Start: Re-open Last file?" tooltip="Re-opens all files that are open when exiting the app, at the next start of the app.">CheckState: 1</control>
+        <control name="ShowSplash" type="CheckBox" label="On Start: Show Splash?" tooltip="Shows the splash window on the startup of the application.">CheckState: 0</control>
+        <control name="SaveWindowsSettings" type="CheckBox" label="On Exit: Save app settings?" tooltip="Persist windows, dock and SQL settings.">CheckState: 1</control>
+        <control name="DeleteSettings" type="CheckBox" label="On Exit: Remove Settings?" tooltip="Removes all saved settings and allows the application to startup using its default settings.">CheckState: 0</control>
+      </controls>
+		</panel>
+    <panel name="SQL Schema">
+      <controls>
+        <control name="CompareTables" type="CheckBox" label="Include Tables?" tooltip="Select SQL Tables to include in the compare">CheckState: 1</control>
+        <control name="CompareViews" type="CheckBox" label="Include Views?" tooltip="Select SQL Views to include in the compare">CheckState: 1</control>
+        <control name="CompareSprocs" type="CheckBox" label="Include Sprocs?" tooltip="Select SQL Stored Procedures to include in the compare">CheckState: 1</control>
+        <control name="CompareFuncs" type="CheckBox" label="Include Funcs?" tooltip="Select SQL Functions to include in the compare">CheckState: 1</control>
+        <control name="CompareTriggers" type="CheckBox" label="Include Triggers?" tooltip="Select SQL Triggers to include in the compare">CheckState: 1</control>
+        <control name="CompareRules" type="CheckBox" label="Include Rules?" tooltip="Select SQL Rules to include in the compare">CheckState: 1</control>
+        <control name="CompareDefaults" type="CheckBox" label="Include Defaults?" tooltip="Select SQL Defaults to include in the compare">CheckState: 1</control>
+        <control name="CompareUDDTs" type="CheckBox" label="Include UDDTs?" tooltip="Select SQL User Defined Data Types to include in the compare">CheckState: 1</control>
+      </controls>
+    </panel>
+    <panel name="Custom XSLT">
+      <controls>
+        <control name="ApplyCustomDataXSLT" type="CheckBox" label="On Data Extract: Apply?" tooltip="Use the specified custom XSLT against any generated Data XML file.">CheckState: 0</control>
+        <control name="CustomDataXSLTFile" type="TextBox" label="Data XSLT File Name?" tooltip="The name and location of the custom XSLT that is used to transform any Data XML. Output result is named CustomOutput.XML."></control>
+        <control name="ApplyCustomSchemaXSLT" type="CheckBox" label="On Schema Gen: Apply?" tooltip="Use the specified custom XSLT against any generated SQL Schema XML file.">CheckState: 0</control>
+        <control name="CustomSchemaXSLTFile" type="TextBox" label="Schema XSLT File Name?" tooltip="The name and location of the custom XSLT that is used to transform any SQL Schema XML. Output result is named CustomOutput.XML."></control>
+      </controls>
+    </panel>
+  </settings>
+</options>

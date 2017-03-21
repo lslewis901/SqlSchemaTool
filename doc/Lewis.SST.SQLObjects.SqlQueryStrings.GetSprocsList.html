@@ -1,0 +1,81 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>SqlQueryStrings.GetSprocsList Field</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">SQL Schema Tool Help</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">SqlQueryStrings.GetSprocsList Field
+					</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> const SQL statement </p>
+      <div class="syntax">public const <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> GetSprocsList = "USE [{0}]
+
+DECLARE @crlf char(2), @tab char(1), @cr char(1), @lf char(1)
+
+SET @cr = char(13)
+SET @lf = char(10)
+SET @crlf = @cr + @lf
+SET @tab = char(9)
+
+SELECT 
+	SPROC_NAME = o.name, 
+	USER_NAME = user_name(o.uid),
+	o.category,
+	ExecIsAnsiNullsOn = (case when (OBJECTPROPERTY(o.id, N'ExecIsAnsiNullsOn')=1) then 1 else 0 end), 
+	ExecIsQuotedIdentOn = (case when (OBJECTPROPERTY(o.id, N'ExecIsQuotedIdentOn')=1) then 1 else 0 end), 
+	ExecIsStartup = (case when (OBJECTPROPERTY(o.id, N'ExecIsStartup')=1) then 1 else 0 end), 
+	IsAnsiNullsOn = (case when (OBJECTPROPERTY(o.id, N'IsAnsiNullsOn')=1) then 1 else 0 end),
+	IsQuotedIdentOn = (case when (OBJECTPROPERTY(o.id, N'IsQuotedIdentOn')=1) then 1 else 0 end),
+	IsExecuted = (case when (OBJECTPROPERTY(o.id, N'IsExecuted')=1) then 1 else 0 end),
+	IsExtendedProc = (case when (OBJECTPROPERTY(o.id, N'IsExtendedProc')=1) then 1 else 0 end),
+	IsReplProc = (case when (OBJECTPROPERTY(o.id, N'IsReplProc')=1) then 1 else 0 end),
+	IsSystemProc = (case when (OBJECTPROPERTY(o.id, N'IsMSShipped')=1) then 1 else 0 end),
+    Check_Sum = (SELECT TOP 1 BINARY_CHECKSUM(SUBSTRING(LOWER( RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(s1.Text, @crlf, ''), @tab, ''), @lf, ''), @cr, ''), ' ', '')))),1,4000))
+				 FROM SYSCOMMENTS AS s1 WHERE o.id = s1.id) +
+				(SELECT SUM(LEN(LOWER(RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(s2.Text, @crlf, ''), @tab, ''), @lf, ''), @cr, ''), ' ', '')))))) as text_Len
+				 FROM SYSCOMMENTS AS s2 WHERE o.id = s2.id )
+
+FROM dbo.sysobjects o
+-- get all non-system procs
+WHERE OBJECTPROPERTY(o.id, N'IsProcedure') = 1 AND OBJECTPROPERTY(o.id, N'IsMSShipped') = 0   
+ORDER BY SPROC_NAME, USER_NAME
+";</div>
+      <p>
+      </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Lewis.SST.SQLObjects.SqlQueryStrings.html">SqlQueryStrings Class</a> | <a href="Lewis.SST.SQLObjects.html">Lewis.SST.SQLObjects Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="GetSprocsList field">
+        </param>
+        <param name="Keyword" value="GetSprocsList field, SqlQueryStrings class">
+        </param>
+        <param name="Keyword" value="SqlQueryStrings.GetSprocsList field">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+        </p>
+        <p>Generated from assembly SST [1.0.2793.35291]</p>
+      </div>
+    </div>
+  </body>
+</html>
