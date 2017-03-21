@@ -1,8 +1,6 @@
 REPORTED BUGS:
 
-TRACKING AT: http://lindseylewis.spaces.live.com/default.aspx, Use the guestbook,
-Or E-mail: support@lewissoftware.com
-
+PREV ISSUE TRACKING: 
 
 	reported: awittig: 08/02/2007,
 	status: fixed. 10/15/2007.
@@ -133,7 +131,7 @@ Environment Notes:
 Know Issues:
 	Data export as XML:
 	To optimize the resulting XML code, the WriteXml method drops column fields with null values. 
-	Dropping the null column fields doesn't affect the usability of the DataSet object—you can 
+	Dropping the null column fields doesn't affect the usability of the DataSet objectâ€”you can 
 	successfully rebuild the object from XML, and data-bound controls can easily manage null values. 
 	This feature can become a problem, however, if you send the DataSet object's XML output to a 
 	non-.NET platform. Other parsers, unaware that null values are omitted for brevity, might 
