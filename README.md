@@ -1,7 +1,7 @@
 # SqlSchemaTool
 A SQL Schema and Data Comparison Tool - Its source code...
 
-The SQL Schema Tool or SST as it is now known started as a command-line developer’s tool. As such, the tool was designed to assist developers working against a SQL server database, so as to migrate any database changes from a development environment into a test or nightly build environment.
+The SQL Schema Tool or SST as it is now known started as a command-line developerâ€™s tool. As such, the tool was designed to assist developers working against a SQL server database, so as to migrate any database changes from a development environment into a test or nightly build environment.
 
 The SST is an application for generating XML schema documents from SQL server databases, comparing those databases or the XML schema documents, and finally generating a DiffGram XML document from the compare results.
 
@@ -11,4 +11,4 @@ The tool can make snapshots of databases, DTS packages, or even the data itself,
 
 As developers, testers, or deployment people, we want to take database B, and make it look like database A.
 
-See the Codeproject Article for additional information about the project.
+See the Codeproject Article (http://www.codeproject.com/KB/database/sqlschematool.aspx) for additional information about the project.
